@@ -22,6 +22,9 @@ else
     fi
 fi
 
+# To force GNU GCC in MacOSX
+# export CXX=/Users/ayanpaul/opt/local/bin/g++
+
 # We require gnu make. If it doesn't exist, assume that make is gnu make.
 if (command -v gmake > /dev/null 2>&1); then
     export MAKE=gmake
@@ -48,7 +51,7 @@ fi
 mkdir -p "$QCDLOOP_DIR"/local
 if [ ! -e "$QCDLOOP_DIR"/local/lib/libqcdloop.a ]; then
     pushd "$QCDLOOP_DIR"
-    ./configure --enable-shared=false --prefix="$QCDLOOP_DIR"/local
+    ./configure --enable-shared=false --prefix="$QCDLOOP_DIR"/local CXXFLAGS='-g -O2 -fopenmp'
     ${MAKE} -j$MAKETHREADS && make install
     $FC -c mod_qcdloop_c.f
     popd

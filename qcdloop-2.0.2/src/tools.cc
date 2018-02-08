@@ -5,6 +5,7 @@
 //          Keith Ellis: keith.ellis@durham.ac.uk
 //          Giulia Zanderighi: giulia.zanderighi@cern.ch
 
+#include <omp.h>
 #include <iostream>
 #include <cmath>
 #include "qcdloop/tools.h"
@@ -1352,14 +1353,16 @@ namespace ql {
   Splash *Splash::_instance = nullptr;
   Splash::Splash()
   {
-    cout << ql::blue << endl;
-    cout << "      ____  __________  __                    "     << endl;
-    cout << "     / __ \\/ ____/ __ \\/ /   ____  ____  ____ "   << endl;
-    cout << "    / / / / /   / / / / /   / __ \\/ __ \\/ __ \\"  << endl;
-    cout << "   / /_/ / /___/ /_/ / /___/ /_/ / /_/ / /_/ /"     << endl;
-    cout << "   \\___\\_\\____/_____/_____/\\____/\\____/ .___/ "<< endl;
-    cout << "                                     /_/      "       << endl;
-    cout << "   ___git___: " << VERSION << " | __authors__: S.C., K.E., G.Z."<< ql::def << endl;
+    if (omp_get_thread_num() == 0) {
+      cout << ql::blue << endl;
+      cout << "      ____  __________  __                    "     << endl;
+      cout << "     / __ \\/ ____/ __ \\/ /   ____  ____  ____ "   << endl;
+      cout << "    / / / / /   / / / / /   / __ \\/ __ \\/ __ \\"  << endl;
+      cout << "   / /_/ / /___/ /_/ / /___/ /_/ / /_/ / /_/ /"     << endl;
+      cout << "   \\___\\_\\____/_____/_____/\\____/\\____/ .___/ "<< endl;
+      cout << "                                     /_/      "       << endl;
+      cout << "   ___git___: " << VERSION << " | __authors__: S.C., K.E., G.Z."<< ql::def << endl;
+    }
   }
 
 }
