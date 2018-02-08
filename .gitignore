@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# MCFM stuff 
+obj/
+Bin/mcfm_omp
