@@ -20,6 +20,13 @@ c--- including both top and bottom quark loops
       real(dp):: mfsq,tau,tauinv,rt,rescale
       complex(dp):: Ahiggs(2,2),fachiggs,amphiggs,f,e3De4
 !      complex(dp):: num_c
+c --- BEGIN MODIFICATION for ggWW -- AP
+      real(dp):: ct,cg
+      complex(dp):: amphiggs_cg,amphiggs_ct
+
+      common/ct/ct
+      common/cg/cg
+c --- END MODIFICATION for ggWW -- AP
 
       do j=-nf,nf
       do k=-nf,nf
@@ -67,7 +74,16 @@ c--- fill amplitudes with contributions of Higgs: bottom loop
       else
          f=czip
       endif
-      amphiggs=mfsq*(cone+(cone-cplx1(tauinv))*f)*im*e3De4
+c --- BEGIN MODIFICATION for ggWW -- AP
+c      mfsq=1000000.**2 /* to test the term proportional to cg */
+c      amphiggs=mfsq*(cone+(cone-cplx1(tauinv))*f)*im*e3De4
+      amphiggs_ct=ct*mfsq*(cone+(cone-cplx1(tauinv))*f)*im*e3De4
+      amphiggs_cg=cg*s(1,2)/3._dp/2._dp*im*e3De4 
+      amphiggs= amphiggs_ct + amphiggs_cg 
+      
+c      write (*,*) ct, cg, amphiggs_ct, amphiggs_cg, s(1,2)
+c --- END MODIFICATION for ggWW -- AP
+
 
       Ahiggs(1,1)=Ahiggs(1,1)+fachiggs*amphiggs*za(1,2)/zb(2,1)
       Ahiggs(2,2)=Ahiggs(2,2)+fachiggs*amphiggs*zb(1,2)/za(2,1)

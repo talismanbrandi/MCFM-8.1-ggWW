@@ -30,6 +30,10 @@ c---                1  --> counterterm for real radiation
       real(dp):: pt45,pt56,m45,mt45,mtrans,Etll,MET
       real(dp):: etvec(4),etmiss,r2,delphi,m34,m56,m3456
       real(dp):: mthl,mthu
+c --- GGdC: begin modification
+c --- add the R8 variable (see eq. 11 of 1503.01060)
+      real(dp):: r8
+c --- GGdC: end of modification
       integer:: switch,n,nplotmax,nd 
       integer tag
       integer:: i
@@ -124,6 +128,11 @@ c--- transverse mass
       Etll=sqrt(max(zip,(p(4,4)+p(5,4))**2-(p(4,3)+p(5,3))**2))
       MET=sqrt(max(zip,etvec(1)**2+etvec(2)**2))
       mtrans=MET+Etll
+      
+c --- GGdC: begin modification
+c --- add the R8 variable (see eq. 11 of 1503.01060)
+      r8=sqrt(m45**2 + (0.8_dp*mtrans)**2)
+c --- GGdC: end of modification
      
 c      Etll=sqrt(
 c     & +(p(4,4)+p(5,4))**2
@@ -170,6 +179,14 @@ c---     xmin:  lowest value to bin
 c---     xmax:  highest value to bin
 c---       dx:  bin width
 c---   llplot:  equal to "lin"/"log" for linear/log scale
+
+c --- GGdC: begin modification
+c --- create istogram for R8 (see eq. 11 of 1503.01060)
+c ---  write(*,*) 'src/User/nplotter_VV.f'
+      call bookplot(n,tag,'500 < R_8 < 2000',
+     & r8,wt,wt2,500._dp,2000._dp,250._dp,'log')
+      n=n+1
+c --- GGdC: end of modification
  
       call bookplot(n,tag,'pt_nu_1',pt3,wt,wt2,zip,100._dp,2.5_dp,'lin')
       n=n+1

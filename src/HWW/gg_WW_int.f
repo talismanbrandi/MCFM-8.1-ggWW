@@ -43,6 +43,15 @@ c--- Triangle (axial) pieces cancel for massless isodoublets
       parameter(del1=7,del2=8)
       parameter(k12h=9,k34h=10,k56h11=11,k34h11=12)
       save caseggWW4l,caseHWWHpI,caseHWWint
+      
+c --- BEGIN MODIFICATION for ggWW -- AP
+      real(dp):: ct,cg
+      complex(dp):: amphiggs_cg,amphiggs_ct
+
+      common/ct/ct
+      common/cg/cg
+c --- END MODIFICATION for ggWW -- AP
+
 !$omp threadprivate(caseggWW4l,caseHWWHpI,caseHWWint)
 
 c--- set this to true to include generations 1 and 2 of (light) quarks
@@ -55,8 +64,9 @@ c--- omit massive loops for pt(W) < "ptWsafetycut_massive" (for num. stability)
       
 c--- omit massless loops for pt(W) < "ptWsafetycut_massless" (for num. stability)
       ptWsafetycut_massless=0.05_dp
-      
+
       if (first) then
+!$OMP MASTER
         write(6,*)'****************************************************'
         write(6,*)'*                                                  *'
         if (includegens1and2) then
@@ -71,6 +81,7 @@ c--- omit massless loops for pt(W) < "ptWsafetycut_massless" (for num. stability
         endif
         write(6,*)'*                                                  *'
         write(6,*)'****************************************************'
+!$OMP END MASTER
         first=.false. 
         caseggWW4l=.false.
         caseHWWHpI=.false.
@@ -320,7 +331,15 @@ c      fachiggs=real(fachiggs)
          f=czip
       endif
       e3De4=2._dp*za(3,5)*zb(6,4)/(s(3,4)*s(5,6))
-      amphiggs=mfsq*(cone+(cone-cplx1(tauinv))*f)*im*e3De4
+c --- BEGIN MODIFICATION for ggWW -- AP
+c      mfsq=1000000.**2 /* to test the term proportional to cg */
+c      amphiggs=mfsq*(cone+(cone-cplx1(tauinv))*f)*im*e3De4
+      amphiggs_ct=ct*mfsq*(cone+(cone-cplx1(tauinv))*f)*im*e3De4
+      amphiggs_cg=cg*s(1,2)/3._dp/2._dp*im*e3De4 
+      amphiggs= amphiggs_ct + amphiggs_cg 
+      
+c      write (*,*) ct, cg, amphiggs_ct, amphiggs_cg, s(1,2)
+c --- END MODIFICATION for ggWW -- AP
       Ahiggs(1,1)=fachiggs*amphiggs*za(1,2)/zb(2,1)
       Ahiggs(1,2)=czip
       Ahiggs(2,1)=czip

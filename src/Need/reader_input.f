@@ -86,6 +86,12 @@ c--- APPLgrid - end
       integer :: tid
       integer :: omp_get_thread_num, omp_get_max_threads
 !$omp threadprivate(/seedBlock/)
+c --- BEGIN MODIFICATION for ggWW -- AP
+      real(dp):: ct,cg
+
+      common/ct/ct
+      common/cg/cg
+c --- END MODIFICATION for ggWW -- AP
       
       common/writerefs/writerefs
       common/spira/spira
@@ -591,6 +597,20 @@ c---- read in the technical parameters
       if (verbose) call writeinput(6,' * ',' ','bff')
       read(20,*) mtex
       if (verbose) call writeinput(6,' * ',' ','mtex')
+c --- BEGIN MODIFICATION for ggWW -- AP
+      if ( nproc >= 123 .and. nproc <= 126 ) then
+        if (verbose) write(6,*)
+        read(20,99) line
+c--- write-out comment line
+        read(20,99) line
+        if (verbose) write(6,*) '* ',line
+c--- ct-cg for Effective Higgs Operators
+        read(20,*) ct
+        if (verbose) call writeinput(6,' * ',' ','ct')
+        read(20,*) cg
+        if (verbose) call writeinput(6,' * ',' ','cg')
+      endif
+c --- END MODIFICATION for ggWW -- AP
 
       ! these two parameters are optional, they should be kept at the end
       ! and we can possibly remove the patch introducing them for the release
