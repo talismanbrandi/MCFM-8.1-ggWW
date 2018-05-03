@@ -29,6 +29,12 @@ c---
      & ggHmt(2,2),ggHmb(2,2),C0mt,C0mb,prop12,prop34,prop56,
      & H4l(2,2),sinthw,higgsprop
       real(dp):: rescale 
+c --- BEGIN MODIFICATION for ggZZ -- AP
+      real(dp):: ct,cg
+
+      common/ct/ct
+      common/cg/cg
+c --- END MODIFICATION for ggZZ -- AP
 
 !==== for width studies rescale by appropriate factor 
       if((keep_smhiggs_norm).and.(anom_higgs)) then 
@@ -58,8 +64,12 @@ c--- Amplitudes for production
       C0mb=qlI3(zip,zip,s(1,2),mb2,mb2,mb2,musq,0)
    
 c------ top quark in the loop
-      ggHmt(2,2)=mt2*(two-s(1,2)*C0mt*(1._dp-4._dp*mt2/s(1,2)))
-     & /(two*wmass*sinthw)
+c --- BEGIN MODIFICATION for ggZZ -- AP
+c ---      ggHmt(2,2)=mt2*(two-s(1,2)*C0mt*(1._dp-4._dp*mt2/s(1,2)))
+c ---     & /(two*wmass*sinthw)
+      ggHmt(2,2)=(ct * mt2*(two-s(1,2)*C0mt*(1._dp-4._dp*mt2/s(1,2)))
+     & + cg * s(1,2)/3._dp)/(two*wmass*sinthw)
+c --- END MODIFICATION for ggZZ -- AP
       ggHmt(1,1)=ggHmt(2,2)*za(1,2)/zb(1,2)
       ggHmt(2,2)=ggHmt(2,2)*zb(1,2)/za(1,2)
 

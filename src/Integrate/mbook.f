@@ -99,9 +99,11 @@ C--------------------------------------------------------------------------
       HMIN(N)=XMIN
       HMAX(N)=XMAX+1d-8
       NNBIN=INT((XMAX+1d-8-XMIN)/DEL)
-      IF (NNBIN .GT. 100) THEN
+c--- Modification made here to accommodate larger number of bins -- AP
+      IF (NNBIN .GT. 200) THEN
       WRITE(6,*) XMAX,XMIN,DEL,NNBIN,' BIN SIZE TOO LARGE'
-      DEL=(XMAX-XMIN)/99._dp
+      DEL=(XMAX-XMIN)/199._dp
+c--- End Modification -- AP      
       NNBIN=INT((XMAX-XMIN)/DEL)
       ENDIF
       NBIN(N)=NNBIN

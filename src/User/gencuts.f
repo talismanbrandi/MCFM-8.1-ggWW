@@ -71,7 +71,9 @@
         if (failed) gencuts=.true.
         return
       endif
-      
+c--- Modified for CMS cuts. -- AP
+      makeCMS_hzz=.true. 
+c--- End Modification -- AP
       if (makeCMS_hzz) then
         call CMS_hzz(pjet,failed)
         if (failed) gencuts=.true.
@@ -91,7 +93,9 @@
       endif
       
 c--- Default: use the cuts from the input file
-      gencuts=gencuts_input(pjet,njets)
+c--- Modified to not use cuts from the input file !!!!
+c      gencuts=gencuts_input(pjet,njets)
+c--- End Modification
         
       return
 

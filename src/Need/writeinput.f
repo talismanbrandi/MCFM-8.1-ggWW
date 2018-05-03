@@ -63,9 +63,12 @@ c--- APPLgrid - end
       real(dp):: rtsmin,Rcut
 c --- BEGIN MODIFICATION for ggWW -- AP
       real(dp):: ct,cg
+      real(dp):: ctZV,ctZA
 
       common/ct/ct
       common/cg/cg
+      common/ctZV/ctZV
+      common/ctZA/ctZA
 c --- END MODIFICATION for ggWW -- AP
  
       common/writerefs/writerefs
@@ -530,12 +533,18 @@ c--- catch special scale choices for stop+b process
       write(unitno,fmt=f99) bff,'bff'
       endif
 c --- BEGIN MODIFICATION for ggWW -- AP
-      if ( nproc >= 123 .and. nproc <= 126 ) then
+      if ( nproc >= 123 .and. nproc <= 132 ) then
         if ((tag .eq. 'ct') .or. (writeall)) then
         write(unitno,fmt=f99) ct,'ct'
         endif
         if ((tag .eq. 'cg') .or. (writeall)) then
         write(unitno,fmt=f99) cg,'cg'
+        endif
+        if ((tag .eq. 'ctZV') .or. (writeall)) then
+        write(unitno,fmt=f99) ctZV,'ctZV'
+        endif
+        if ((tag .eq. 'ctZA') .or. (writeall)) then
+        write(unitno,fmt=f99) ctZA,'ctZA'
         endif
       endif
 c --- END MODIFICATION for ggWW -- AP

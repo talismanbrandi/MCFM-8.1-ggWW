@@ -94,6 +94,19 @@ c---       dx:  bin width
 c---   llplot:  equal to "lin"/"log" for linear/log scale
 
 c--- Plots of m(3456) in specific regions
+c--- Modifications for adding a few relevant extended histograms for ggZZ -- AP
+      call bookplot(n,tag,'60 < m(3456) < 2010',
+     & m3456,wt,wt2,60._dp,2010._dp,10._dp,'log')
+      n=n+1
+
+      call bookplot(n,tag,'250 < m(3456) < 4000',
+     & m3456,wt,wt2,250._dp,4000._dp,20._dp,'log')
+      n=n+1
+
+      call bookplot(n,tag,'250 < m(3456) < 10000',
+     & m3456,wt,wt2,250._dp,10000._dp,50._dp,'log')
+      n=n+1
+c--- End Modification -- AP
       call bookplot(n,tag,'10 < m(3456) < 2010',
      & m3456,wt,wt2,10._dp,2010._dp,20._dp,'log')
       n=n+1

@@ -49,6 +49,14 @@ c--- expected to be unreliable, namely pt(Z)<ptZsafetycut set below
      & Mloop_bquark(2,2,2,2),Mloop_tquark(2,2,2,2),
      & Amb_vec,Amb_ax,Amt_vec,Amt_ax
 c     & AmtLL_new(2,2,2,2),AmtLR_new(2,2,2,2)
+
+c --- BEGIN MODIFICATION for ggZZ -- AP
+      real(dp):: ctZV,ctZA
+
+      common/ctZV/ctZV
+      common/ctZA/ctZA
+c --- END MODIFICATION for ggZZ -- AP
+
       common/ggZZuse6d/ggZZuse6d
       parameter(up=2,dn=1)
 !$omp threadprivate(/ggZZuse6d/)
@@ -227,10 +235,14 @@ c--- implementation of b-quark loop in terms of vector and axial couplings
 c--- implementation of t-quark loop in terms of vector and axial couplings
       Amt_vec=two*(AmtLL(h1,h2,h34,h56)+AmtLR(h1,h2,h34,h56))
       Amt_ax =two*(AmtLL(h1,h2,h34,h56)-AmtLR(h1,h2,h34,h56))
+c --- BEGIN MODIFICATION for ggZZ -- AP      
       Mloop_tquark(h1,h2,h34,h56)=im*(
      & Amt_vec*
-     & (Qu*q1+cvec(up)*cl1(h34)*prop34)*(Qu*q2+cvec(up)*cl2(h56)*prop56)
-     &+Amt_ax*(cax(up)*cl1(h34)*prop34)*(cax(up)*cl2(h56)*prop56))
+     & (Qu*q1+ctZV*cvec(up)*cl1(h34)*prop34)*(Qu*q2+ctZV*cvec(up)*cl2(h56)*prop56)
+     &+Amt_ax*(ctZA*cax(up)*cl1(h34)*prop34)*(ctZA*cax(up)*cl2(h56)*prop56))
+c --- & (Qu*q1+cvec(up)*cl1(h34)*prop34)*(Qu*q2+cvec(up)*cl2(h56)*prop56)
+c --- &+Amt_ax*(cax(up)*cl1(h34)*prop34)*(cax(up)*cl2(h56)*prop56)) 
+c --- END MODIFICATION for ggZZ -- AP     
       else
         Mloop_tquark(h1,h2,h34,h56)=czip
       endif

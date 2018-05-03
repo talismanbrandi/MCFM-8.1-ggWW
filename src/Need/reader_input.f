@@ -88,9 +88,12 @@ c--- APPLgrid - end
 !$omp threadprivate(/seedBlock/)
 c --- BEGIN MODIFICATION for ggWW -- AP
       real(dp):: ct,cg
+      real(dp):: ctZV,ctZA
 
       common/ct/ct
       common/cg/cg
+      common/ctZV/ctZV
+      common/ctZA/ctZA
 c --- END MODIFICATION for ggWW -- AP
       
       common/writerefs/writerefs
@@ -598,7 +601,7 @@ c---- read in the technical parameters
       read(20,*) mtex
       if (verbose) call writeinput(6,' * ',' ','mtex')
 c --- BEGIN MODIFICATION for ggWW -- AP
-      if ( nproc >= 123 .and. nproc <= 126 ) then
+      if ( nproc >= 123 .and. nproc <= 132 ) then
         if (verbose) write(6,*)
         read(20,99) line
 c--- write-out comment line
@@ -609,6 +612,11 @@ c--- ct-cg for Effective Higgs Operators
         if (verbose) call writeinput(6,' * ',' ','ct')
         read(20,*) cg
         if (verbose) call writeinput(6,' * ',' ','cg')
+c--- cV-cA for Modifications to top couplings
+        read(20,*) ctZV
+        if (verbose) call writeinput(6,' * ',' ','ctZV')
+        read(20,*) ctZA
+        if (verbose) call writeinput(6,' * ',' ','ctZA')
       endif
 c --- END MODIFICATION for ggWW -- AP
 
