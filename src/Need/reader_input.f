@@ -601,7 +601,7 @@ c---- read in the technical parameters
       read(20,*) mtex
       if (verbose) call writeinput(6,' * ',' ','mtex')
 c --- BEGIN MODIFICATION for ggWW -- AP
-      if ( nproc >= 123 .and. nproc <= 132 ) then
+      if ( nproc >= 123 .and. nproc <= 133 ) then
         if (verbose) write(6,*)
         read(20,99) line
 c--- write-out comment line

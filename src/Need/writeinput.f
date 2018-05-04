@@ -533,7 +533,7 @@ c--- catch special scale choices for stop+b process
       write(unitno,fmt=f99) bff,'bff'
       endif
 c --- BEGIN MODIFICATION for ggWW -- AP
-      if ( nproc >= 123 .and. nproc <= 132 ) then
+      if ( nproc >= 123 .and. nproc <= 133 ) then
         if ((tag .eq. 'ct') .or. (writeall)) then
         write(unitno,fmt=f99) ct,'ct'
         endif
