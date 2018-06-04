@@ -1,4 +1,6 @@
-      subroutine getggHZZamps(p,Mloop_bquark,Mloop_tquark)
+c --- BEGIN MODIFICATION for ggZZ -- AP      
+      subroutine getggHZZamps(p,Mloop_bquark,Mloop_tquark,SM)
+c --- BEGIN MODIFICATION for ggZZ -- AP
         use mod_qcdloop_c
       implicit none
       include 'types.f'
@@ -30,6 +32,7 @@ c---
      & H4l(2,2),sinthw,higgsprop
       real(dp):: rescale 
 c --- BEGIN MODIFICATION for ggZZ -- AP
+      logical:: SM
       real(dp):: ct,cg
 
       common/ct/ct
@@ -65,10 +68,13 @@ c--- Amplitudes for production
    
 c------ top quark in the loop
 c --- BEGIN MODIFICATION for ggZZ -- AP
-c ---      ggHmt(2,2)=mt2*(two-s(1,2)*C0mt*(1._dp-4._dp*mt2/s(1,2)))
-c ---     & /(two*wmass*sinthw)
-      ggHmt(2,2)=(ct * mt2*(two-s(1,2)*C0mt*(1._dp-4._dp*mt2/s(1,2)))
-     & + cg * s(1,2)/3._dp)/(two*wmass*sinthw)
+      if (SM) then
+        ggHmt(2,2)=mt2*(two-s(1,2)*C0mt*(1._dp-4._dp*mt2/s(1,2)))
+     &  /(two*wmass*sinthw)
+      else
+        ggHmt(2,2)=(ct * mt2*(two-s(1,2)*C0mt*(1._dp-4._dp*mt2/s(1,2)))
+     &  + cg * s(1,2)/3._dp)/(two*wmass*sinthw)
+      endif
 c --- END MODIFICATION for ggZZ -- AP
       ggHmt(1,1)=ggHmt(2,2)*za(1,2)/zb(1,2)
       ggHmt(2,2)=ggHmt(2,2)*zb(1,2)/za(1,2)

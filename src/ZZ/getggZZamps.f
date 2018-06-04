@@ -1,5 +1,7 @@
+c --- BEGIN MODIFICATION for ggZZ -- AP
       subroutine getggZZamps(p,dolight,dobottom,dotop,
-     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark)
+     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,SM)
+c --- END MODIFICATION for ggZZ -- AP
       implicit none
       include 'types.f'
 c--- Returns a series of arrays representing the dressed amp[itudes
@@ -37,6 +39,7 @@ c--- expected to be unreliable, namely pt(Z)<ptZsafetycut set below
       include 'scale.f'
       include 'docheck.f'
       include 'first.f'
+      include 'mpicommon.f'
       logical:: dolight,dobottom,dotop,ggZZuse6d
       integer:: h1,h2,h34,h56,up,dn,om,nu
       real(dp):: p(mxpart,4),cvec(2),cax(2),cl1(2),cl2(2),
@@ -51,6 +54,7 @@ c--- expected to be unreliable, namely pt(Z)<ptZsafetycut set below
 c     & AmtLL_new(2,2,2,2),AmtLR_new(2,2,2,2)
 
 c --- BEGIN MODIFICATION for ggZZ -- AP
+      logical:: SM
       real(dp):: ctZV,ctZA
 
       common/ctZV/ctZV
@@ -70,30 +74,33 @@ c--- omit t,b quark loops for pt(Z) < "ptZsafetycut_massive"  (for num. stabilit
       ptZsafetycut_massive=0.1_dp
 
       if (first) then
-        write(6,*)'****************************************************'
-        write(6,*)'*                                                  *'
-        if (dolight) then
-        write(6,*)'*  gg->ZZ box loop includes gens. 1 and 2          *'
-        else
-        write(6,*)'*  gg->ZZ box loop does not include gens. 1 and 2  *'
+        if (rank == 0) then
+          write(6,*)'****************************************************'
+          write(6,*)'*                                                  *'
+          if (dolight) then
+          write(6,*)'*  gg->ZZ box loop includes gens. 1 and 2          *'
+          else
+          write(6,*)'*  gg->ZZ box loop does not include gens. 1 and 2  *'
+          endif
+          if (dobottom) then
+          write(6,*)'*  gg->ZZ box loop includes bottom quark           *'
+          else
+          write(6,*)'*  gg->ZZ box loop does not include bottom quark   *'
+          endif
+          if (dotop) then
+          write(6,*)'*  gg->ZZ box loop includes top quark              *'
+          else
+          write(6,*)'*  gg->ZZ box loop does not include top quark      *'
+          endif
+          write(6,*)'*                                                  *'
+          write(6,54) ptZsafetycut_massless,'(gens. 1,2)'
+          write(6,54) ptZsafetycut_massive, '(b,t loops)'
+          write(6,*)'*                                                  *'
+          write(6,*)'****************************************************'
+   54     format(' *  Numer. stability: pt(Z) >',f6.3,' GeV ',a11,' *')
         endif
-        if (dobottom) then
-        write(6,*)'*  gg->ZZ box loop includes bottom quark           *'
-        else
-        write(6,*)'*  gg->ZZ box loop does not include bottom quark   *'
-        endif
-        if (dotop) then
-        write(6,*)'*  gg->ZZ box loop includes top quark              *'
-        else
-        write(6,*)'*  gg->ZZ box loop does not include top quark      *'
-        endif
-        write(6,*)'*                                                  *'
-        write(6,54) ptZsafetycut_massless,'(gens. 1,2)'
-        write(6,54) ptZsafetycut_massive, '(b,t loops)'
-        write(6,*)'*                                                  *'
-        write(6,*)'****************************************************'
         first=.false. 
-   54   format(' *  Numer. stability: pt(Z) >',f6.3,' GeV ',a11,' *')
+c---   54   format(' *  Numer. stability: pt(Z) >',f6.3,' GeV ',a11,' *')
       endif
 
 c--- set up spinor products      
@@ -235,11 +242,18 @@ c--- implementation of b-quark loop in terms of vector and axial couplings
 c--- implementation of t-quark loop in terms of vector and axial couplings
       Amt_vec=two*(AmtLL(h1,h2,h34,h56)+AmtLR(h1,h2,h34,h56))
       Amt_ax =two*(AmtLL(h1,h2,h34,h56)-AmtLR(h1,h2,h34,h56))
-c --- BEGIN MODIFICATION for ggZZ -- AP      
-      Mloop_tquark(h1,h2,h34,h56)=im*(
-     & Amt_vec*
-     & (Qu*q1+ctZV*cvec(up)*cl1(h34)*prop34)*(Qu*q2+ctZV*cvec(up)*cl2(h56)*prop56)
-     &+Amt_ax*(ctZA*cax(up)*cl1(h34)*prop34)*(ctZA*cax(up)*cl2(h56)*prop56))
+c --- BEGIN MODIFICATION for ggZZ -- AP
+      if (SM) then
+        Mloop_tquark(h1,h2,h34,h56)=im*(
+     &  Amt_vec*
+     &  (Qu*q1+cvec(up)*cl1(h34)*prop34)*(Qu*q2+cvec(up)*cl2(h56)*prop56)
+     &  +Amt_ax*(cax(up)*cl1(h34)*prop34)*(cax(up)*cl2(h56)*prop56)) 
+      else
+        Mloop_tquark(h1,h2,h34,h56)=im*(
+     &  Amt_vec*
+     &  (Qu*q1+ctZV*cvec(up)*cl1(h34)*prop34)*(Qu*q2+ctZV*cvec(up)*cl2(h56)*prop56)
+     &  +Amt_ax*(ctZA*cax(up)*cl1(h34)*prop34)*(ctZA*cax(up)*cl2(h56)*prop56))
+      endif
 c --- & (Qu*q1+cvec(up)*cl1(h34)*prop34)*(Qu*q2+cvec(up)*cl2(h56)*prop56)
 c --- &+Amt_ax*(cax(up)*cl1(h34)*prop34)*(cax(up)*cl2(h56)*prop56)) 
 c --- END MODIFICATION for ggZZ -- AP     

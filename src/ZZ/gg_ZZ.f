@@ -1,4 +1,6 @@
-      subroutine gg_ZZ(p,msqgg)
+c --- BEGIN MODIFICATION for ggZZ -- AP      
+      subroutine gg_ZZ(p,msqgg,SM)
+c --- END MODIFICATION for ggZZ -- AP        
       implicit none
       include 'types.f'
       
@@ -23,6 +25,9 @@ c--- (default: included)
      & Sloop_uptype(2,2,2,2),Sloop_dntype(2,2,2,2),
      & Sloop_bquark(2,2,2,2),Sloop_tquark(2,2,2,2),
      & Mamp,Samp
+c --- BEGIN MODIFICATION for ggZZ -- AP     
+      logical:: SM
+c --- END MODIFICATION for ggZZ -- AP      
 
 c--- set this to true to include generations 1 and 2 of (light) quarks
       includegens1and2=.true.      
@@ -34,9 +39,11 @@ c--- set this to true to include massive top quark
 c--- if set, performs check against numerical results at specific PS point
       docheck=.false.
       
-c--- compute all gg->ZZ amplitudes      
+c--- compute all gg->ZZ amplitudes     
+c --- BEGIN MODIFICATION for ggZZ -- AP 
       call getggZZamps(p,includegens1and2,includebottom,includetop,
-     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark)
+     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,SM)
+c --- END MODIFICATION for ggZZ -- AP     
       
       if (interference) then
 c--- for interference, compute amplitudes after 4<->6 swap
@@ -46,8 +53,10 @@ c--- for interference, compute amplitudes after 4<->6 swap
        pswap(4,:)=p(6,:)
        pswap(5,:)=p(5,:)
        pswap(6,:)=p(4,:)
+c --- BEGIN MODIFICATION for ggZZ -- AP       
        call getggZZamps(pswap,includegens1and2,includebottom,includetop,
-     &  Sloop_uptype,Sloop_dntype,Sloop_bquark,Sloop_tquark)
+     &  Sloop_uptype,Sloop_dntype,Sloop_bquark,Sloop_tquark,SM)
+c --- END MODIFICATION for ggZZ -- AP     
       endif
       
       msqgg=0._dp

@@ -23,7 +23,10 @@ c---                1  --> counterterm for real radiation
       include 'histo.f'
       include 'outputflags.f'
       include 'interference.f'
-      real(dp):: p(mxpart,4),wt,wt2,m3456,pt34,pttwo,D_MELA
+      real(dp):: p(mxpart,4),wt,wt2,m3456,pt34,pttwo
+c--- Modifications for adding a discriminator for ggZZ -- MS
+      real(dp):: D_MELA
+c--- End Modification -- MS
       integer:: switch,n,nplotmax
       integer tag
       logical, save::first=.true.
@@ -136,21 +139,28 @@ c--- End Modification -- AP
       call bookplot(n,tag,'50 < m(3456) < 250',
      & m3456,wt,wt2,50._dp,250._dp,2._dp,'log')
       n=n+1
-      
-      
-      
+
+c--- Modifications for adding a few relevant extended histograms for ggZZ Discriminator -- MS & AP      
       call get_MELA_Discr_ggZZ(p,D_MELA)
-      call bookplot(n,tag,'D_MELA(Sgg vs. Bgg)',
+      call bookplot(n,tag,'D_GG_BKG(Sgg vs. Bgg)',
      & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
       n=n+1
-
       
+      call get_MELA_Discr_ggZZ_BSM_1(p,D_MELA)
+      call bookplot(n,tag,'D_BSM_1(S_BSM vs. S_SM v1)',
+     & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
+      n=n+1
+      
+      call get_MELA_Discr_ggZZ_BSM_2(p,D_MELA)
+      call bookplot(n,tag,'D_BSM_2(S_BSM vs. S_SM v2)',
+     & D_MELA,wt,wt2,-1._dp,1._dp,0.01_dp,'lin')
+      n=n+1
             
       call get_MELA_Discr_ppZZ(p,D_MELA)
-      call bookplot(n,tag,'D_MELA(Spp vs. Bpp)',
+      call bookplot(n,tag,'D_PP_BKG(Spp vs. Bpp)',
      & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
       n=n+1
-
+c--- End Modification -- MS & AP
         
         
         
@@ -203,21 +213,24 @@ c--- Set the maximum number of plots, on the first call
 
       
       
-      
+c--- Modifications for MELA discriminators -- MS & AP  
       subroutine get_MELA_Discr_ggZZ(p,D_MELA)
       implicit none
       include 'types.f'
       include 'mxpart.f'      
       real(dp):: p(mxpart,4),D_MELA      
       real(dp) :: msq_SIGINT(-5:5,-5:5),msq_SIG(-5:5,-5:5),msq_BKG
+      logical:: SM
+      
+      SM=.false.
       
         msq_SIG(:,:)=0._dp    
         msq_SIGINT(:,:)=0._dp      
         msq_BKG=0._dp   
         
                
-        call gg_hZZ_tb(p,msq_SIG)      ! this is the signal ME (gg->H->ZZ)
-        call gg_zz(p,msq_BKG)          ! this is the gg-bkg ME (gg->ZZ)
+        call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
+        call gg_zz(p,msq_BKG,SM)          ! this is the gg-bkg ME (gg->ZZ)
 !         call gg_zz_Hpi(p,msq_SIGINT) ! this includes the interf. term (hence not positive definit)
 
         D_MELA = msq_SIG(0,0)/(msq_SIG(0,0)+msq_BKG)      
@@ -227,6 +240,44 @@ c--- Set the maximum number of plots, on the first call
       return
       end
       
+      
+      subroutine get_MELA_Discr_ggZZ_BSM_1(p,D_MELA)
+      implicit none
+      include 'types.f'
+      include 'mxpart.f'      
+      real(dp):: p(mxpart,4),D_MELA      
+      real(dp):: msq_SM(-5:5,-5:5),msq_BSM(-5:5,-5:5)
+      
+        msq_SM(:,:)=0._dp    
+        msq_BSM(:,:)=0._dp      
+        
+               
+        call gg_hZZ_tb(p,msq_SM,.true.)  ! this is the BSM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_BSM,.false.)  ! this is the SM signal ME (gg->H->ZZ)
+
+        D_MELA = msq_BSM(0,0)/(msq_BSM(0,0)+msq_SM(0,0))      
+      
+      return
+      end
+      
+      subroutine get_MELA_Discr_ggZZ_BSM_2(p,D_MELA)
+      implicit none
+      include 'types.f'
+      include 'mxpart.f'      
+      real(dp):: p(mxpart,4),D_MELA      
+      real(dp):: msq_SM(-5:5,-5:5),msq_BSM(-5:5,-5:5)
+      
+        msq_SM(:,:)=0._dp    
+        msq_BSM(:,:)=0._dp      
+        
+               
+        call gg_hZZ_tb(p,msq_SM,.true.)  ! this is the BSM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_BSM,.false.)  ! this is the SM signal ME (gg->H->ZZ)
+
+        D_MELA = (msq_BSM(0,0)-msq_SM(0,0))/(msq_BSM(0,0)+msq_SM(0,0))      
+      
+      return
+      end
       
 
       subroutine get_MELA_Discr_PPZZ(p,D_MELA)
@@ -243,14 +294,17 @@ c--- Set the maximum number of plots, on the first call
       real(dp) :: Collider_Energy,Etot,Pztot
       integer:: ih1,ih2,j,k
       common/density/ih1,ih2
+      logical:: SM
+      
+      SM=.false.
       
         msq_SIG(:,:)=0._dp    
         msq_BKGg=0._dp
         msq_BKGq(:,:) = 0d0
         
                
-        call gg_hZZ_tb(p,msq_SIG)      ! this is the signal ME (gg->H->ZZ)
-        call gg_zz(p,msq_BKGg)         ! this is the gg-bkg ME (gg->ZZ)
+        call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
+        call gg_zz(p,msq_BKGg,SM)         ! this is the gg-bkg ME (gg->ZZ)
         call qqb_zz(p,msq_BKGq)        ! this is the qq-bkg ME (qqb->ZZ)
 
         
@@ -279,6 +333,6 @@ c--- Set the maximum number of plots, on the first call
       
       return
       end
-            
+c--- End Modification -- MS & AP      
       
       

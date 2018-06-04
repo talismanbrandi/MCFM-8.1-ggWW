@@ -1,4 +1,6 @@
-      subroutine gg_ZZ_all(p,msq)
+c --- BEGIN MODIFICATION for ggZZ -- AP      
+      subroutine gg_ZZ_all(p,msq,SM)
+c --- END MODIFICATION for ggZZ -- AP
       implicit none
       include 'types.f'
       
@@ -27,6 +29,9 @@ c--- The effect of massive bottom and top quark loops is included
      & ggH_bquark_swap(2,2,2,2),ggH_tquark_swap(2,2,2,2),Ahiggs_swap,
      & Acont_swap,Mamp,Samp
       logical:: includegens1and2,includebottom,includetop
+c --- BEGIN MODIFICATION for ggZZ -- AP      
+      logical:: SM
+c --- END MODIFICATION for ggZZ -- AP      
 
 c--- set this to true to include generations 1 and 2 of (light) quarks
       includegens1and2=.true.      
@@ -52,10 +57,12 @@ c--- if noglue print warning message and stop
       
 c      if (pttwo(3,4,p) < 7._dp) return ! Kauer gg2VV cut on |H+C|^2
 
+c --- BEGIN MODIFICATION for ggZZ -- AP
       call getggZZamps(p,includegens1and2,includebottom,includetop,
-     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark)
+     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,SM)
 
-      call getggHZZamps(p,ggH_bquark,ggH_tquark)
+      call getggHZZamps(p,ggH_bquark,ggH_tquark,SM)
+c --- END MODIFICATION for ggZZ -- AP
       
       if (interference) then
 c--- for interference, compute amplitudes after 4<->6 swap
@@ -65,9 +72,11 @@ c--- for interference, compute amplitudes after 4<->6 swap
        pswap(4,:)=p(6,:)
        pswap(5,:)=p(5,:)
        pswap(6,:)=p(4,:)
+c --- BEGIN MODIFICATION for ggZZ -- AP       
        call getggZZamps(pswap,includegens1and2,includebottom,includetop,
-     &  Sloop_uptype,Sloop_dntype,Sloop_bquark,Sloop_tquark)
-       call getggHZZamps(pswap,ggH_bquark_swap,ggH_tquark_swap)
+     &  Sloop_uptype,Sloop_dntype,Sloop_bquark,Sloop_tquark,SM)
+       call getggHZZamps(pswap,ggH_bquark_swap,ggH_tquark_swap,SM)
+c --- END MODIFICATION for ggZZ -- AP       
       endif
       
       msqgg=0._dp

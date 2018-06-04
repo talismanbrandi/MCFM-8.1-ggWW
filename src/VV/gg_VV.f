@@ -24,6 +24,11 @@ c--- (default: included)
      & Mloop_bquark(2,2,2,2),Mloop_tquark(2,2,2,2),
      & Mlight(2,2,2,2),Mgen3(2,2,2,2),
      & Mamp,faczz,facww
+c --- BEGIN MODIFICATION for ggZZ -- AP     
+      logical SM
+c --- END MODIFICATION for ggZZ -- AP      
+      
+      SM=.true.
 
 c--- set this to true to include generations 1 and 2 of (light) quarks
       includegens1and2=.true.      
@@ -55,8 +60,10 @@ c--- overall factor from getggWWamps.f that is not common
 c--- compute all gg->WW and gg->ZZ amplitudes
       call getggWWamps(pswap,includegens1and2,includegen3,
      & Mlight(:,:,1,1),Mgen3(:,:,1,1))
+c --- BEGIN MODIFICATION for ggZZ -- AP     
       call getggZZamps(p,includegens1and2,includebottom,includetop,
-     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark)
+     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,SM)
+c --- END MODIFICATION for ggZZ -- AP     
             
 c--- pt cut to reproduce Kauer paper
       if (pttwo(3,4,p) < 1._dp) then

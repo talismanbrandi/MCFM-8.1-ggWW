@@ -1,4 +1,6 @@
-      subroutine gg_hZZ_tb(p,msq)
+c --- BEGIN MODIFICATION for ggZZ -- AP
+      subroutine gg_hZZ_tb(p,msq,SM)
+c --- END MODIFICATION for ggZZ -- AP
         use mod_qcdloop_c
       implicit none
       include 'types.f'
@@ -18,10 +20,15 @@ c--- The exact result for massive bottom and top quark loops is included
      & pswap(mxpart,4),oprat
       complex(dp):: ggH_bquark(2,2,2,2),ggH_tquark(2,2,2,2),Ahiggs,
      & ggH_bquark_swap(2,2,2,2),ggH_tquark_swap(2,2,2,2),Ahiggs_swap
+c --- BEGIN MODIFICATION for ggZZ -- AP
+      logical:: SM
+c --- END MODIFICATION for ggZZ -- AP
 
       msq(:,:)=0._dp
       
-      call getggHZZamps(p,ggH_bquark,ggH_tquark)
+c --- BEGIN MODIFICATION for ggZZ -- AP      
+      call getggHZZamps(p,ggH_bquark,ggH_tquark,SM)
+c --- END MODIFICATION for ggZZ -- AP
       
       if (interference) then
 c--- for interference, compute amplitudes after 4<->6 swap
@@ -31,7 +38,9 @@ c--- for interference, compute amplitudes after 4<->6 swap
        pswap(4,:)=p(6,:)
        pswap(5,:)=p(5,:)
        pswap(6,:)=p(4,:)
-       call getggHZZamps(pswap,ggH_bquark_swap,ggH_tquark_swap)
+c --- BEGIN MODIFICATION for ggZZ -- AP
+       call getggHZZamps(pswap,ggH_bquark_swap,ggH_tquark_swap,SM)
+c --- END MODIFICATION for ggZZ -- AP       
       endif
       
       msqgg=0._dp

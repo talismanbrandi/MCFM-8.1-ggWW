@@ -414,7 +414,9 @@ c      call checkgvec(-1, 1,5,p,qqb_gamgam_g,qqb_gmgmjt_gvec)
       elseif (kcase==kHZZ_4l) then
         call qqb_hzz(p,msq)
       elseif (kcase==kHZZ_tb) then
-        call gg_hzz_tb(p,msq)
+c --- BEGIN MODIFICATION for ggZZ -- AP        
+        call gg_hzz_tb(p,msq,.false.)
+c --- END MODIFICATION for ggZZ -- AP        
       elseif (kcase==kHVV_tb) then
         call gg_hvv_tb(p,msq)
       elseif (kcase==kggVV4l) then
@@ -423,14 +425,16 @@ c      call checkgvec(-1, 1,5,p,qqb_gamgam_g,qqb_gmgmjt_gvec)
         msq(:,:)=0._dp
         call gg_VV(p,msq(0,0))
       elseif (kcase==kHZZint) then
-        call gg_zz_int(p,msq)
+c --- BEGIN MODIFICATION for ggZZ -- AP        
+        call gg_zz_int(p,msq,.false.)
       elseif (kcase==kHZZHpi) then
-        call gg_zz_Hpi(p,msq)
+        call gg_zz_Hpi(p,msq,.false.)
       elseif (kcase==kggZZ4l) then
-        call gg_zz_all(p,msq)
+        call gg_zz_all(p,msq,.false.)
       elseif (kcase==kggZZbx) then
         msq(:,:)=0._dp
-        call gg_ZZ(p,msq(0,0))
+        call gg_ZZ(p,msq(0,0),.false.)
+c --- END MODIFICATION for ggZZ -- AP        
       elseif (kcase==kHZZqgI) then 
          call qg_Hint_ZZ(p,msq)
       elseif (kcase==kH_1jet) then
