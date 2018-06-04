@@ -231,10 +231,10 @@ c--- Modifications for MELA discriminators -- MS & AP
                
         call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
         call gg_zz(p,msq_BKG,SM)          ! this is the gg-bkg ME (gg->ZZ)
-!         call gg_zz_Hpi(p,msq_SIGINT) ! this includes the interf. term (hence not positive definit)
+c!         call gg_zz_Hpi(p,msq_SIGINT) ! this includes the interf. term (hence not positive definit)
 
         D_MELA = msq_SIG(0,0)/(msq_SIG(0,0)+msq_BKG)      
-!         D_MELA = msq_SIGINT(0,0)/(msq_SIGINT(0,0)+msq_BKG)
+c!         D_MELA = msq_SIGINT(0,0)/(msq_SIGINT(0,0)+msq_BKG)
 
       
       return
@@ -333,6 +333,6 @@ c--- Modifications for MELA discriminators -- MS & AP
       
       return
       end
-c--- End Modification -- MS & AP      
+c--- End Modification -- MS & AP     
       
       
