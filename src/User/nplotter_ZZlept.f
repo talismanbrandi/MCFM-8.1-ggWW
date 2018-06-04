@@ -212,127 +212,127 @@ c--- Set the maximum number of plots, on the first call
       end
 
       
-      
+c--- NOTE: The following has been moved to User/mela.f      
 c--- Modifications for MELA discriminators -- MS & AP  
-      subroutine get_MELA_Discr_ggZZ(p,D_MELA)
-      implicit none
-      include 'types.f'
-      include 'mxpart.f'      
-      real(dp):: p(mxpart,4),D_MELA      
-      real(dp) :: msq_SIGINT(-5:5,-5:5),msq_SIG(-5:5,-5:5),msq_BKG
-      logical:: SM
-      
-      SM=.false.
-      
-        msq_SIG(:,:)=0._dp    
-        msq_SIGINT(:,:)=0._dp      
-        msq_BKG=0._dp   
-        
-               
-        call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
-        call gg_zz(p,msq_BKG,SM)          ! this is the gg-bkg ME (gg->ZZ)
-c!         call gg_zz_Hpi(p,msq_SIGINT) ! this includes the interf. term (hence not positive definit)
-
-        D_MELA = msq_SIG(0,0)/(msq_SIG(0,0)+msq_BKG)      
-c!         D_MELA = msq_SIGINT(0,0)/(msq_SIGINT(0,0)+msq_BKG)
-
-      
-      return
-      end
-      
-      
-      subroutine get_MELA_Discr_ggZZ_BSM_1(p,D_MELA)
-      implicit none
-      include 'types.f'
-      include 'mxpart.f'      
-      real(dp):: p(mxpart,4),D_MELA      
-      real(dp):: msq_SM(-5:5,-5:5),msq_BSM(-5:5,-5:5)
-      
-        msq_SM(:,:)=0._dp    
-        msq_BSM(:,:)=0._dp      
-        
-               
-        call gg_hZZ_tb(p,msq_SM,.true.)  ! this is the BSM signal ME (gg->H->ZZ)
-        call gg_hZZ_tb(p,msq_BSM,.false.)  ! this is the SM signal ME (gg->H->ZZ)
-
-        D_MELA = msq_BSM(0,0)/(msq_BSM(0,0)+msq_SM(0,0))      
-      
-      return
-      end
-      
-      subroutine get_MELA_Discr_ggZZ_BSM_2(p,D_MELA)
-      implicit none
-      include 'types.f'
-      include 'mxpart.f'      
-      real(dp):: p(mxpart,4),D_MELA      
-      real(dp):: msq_SM(-5:5,-5:5),msq_BSM(-5:5,-5:5)
-      
-        msq_SM(:,:)=0._dp    
-        msq_BSM(:,:)=0._dp      
-        
-               
-        call gg_hZZ_tb(p,msq_SM,.true.)  ! this is the BSM signal ME (gg->H->ZZ)
-        call gg_hZZ_tb(p,msq_BSM,.false.)  ! this is the SM signal ME (gg->H->ZZ)
-
-        D_MELA = (msq_BSM(0,0)-msq_SM(0,0))/(msq_BSM(0,0)+msq_SM(0,0))      
-      
-      return
-      end
-      
-
-      subroutine get_MELA_Discr_PPZZ(p,D_MELA)
-      implicit none
-      include 'types.f'
-      include 'energy.f'      
-      include 'mxpart.f'  
-      include 'nf.f'
-      include 'facscale.f'            
-      include 'nflav.f'      
-      real(dp):: p(mxpart,4),D_MELA      
-      real(dp) :: msq_SIG(-5:5,-5:5),msq_BKGg,msq_BKGq(-5:5,-5:5)
-      real(dp) :: fx1(-nf:nf),fx2(-nf:nf),xmsqjk,xx(1:2)
-      real(dp) :: Collider_Energy,Etot,Pztot
-      integer:: ih1,ih2,j,k
-      common/density/ih1,ih2
-      logical:: SM
-      
-      SM=.false.
-      
-        msq_SIG(:,:)=0._dp    
-        msq_BKGg=0._dp
-        msq_BKGq(:,:) = 0d0
-        
-               
-        call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
-        call gg_zz(p,msq_BKGg,SM)         ! this is the gg-bkg ME (gg->ZZ)
-        call qqb_zz(p,msq_BKGq)        ! this is the qq-bkg ME (qqb->ZZ)
-
-        
-        Collider_Energy = sqrts
-        Etot = p(3,4)+p(4,4)+p(5,4)+p(6,4)
-        Pztot= p(3,3)+p(4,3)+p(5,3)+p(6,3)
-        xx(1) = (Etot+Pztot)/Collider_Energy
-        xx(2) = (Etot-Pztot)/Collider_Energy
-        
-        call fdist(ih1,xx(1),facscale,fx1)
-        call fdist(ih2,xx(2),facscale,fx2)
-
-        msq_SIG(0,0) = fx1(0)*fx2(0) * msq_SIG(0,0)
-        msq_BKGg     = fx1(0)*fx2(0) * msq_BKGg
-
-        xmsqjk = 0d0
-        do j=-nflav,nflav
-        do k=-nflav,nflav                
-          xmsqjk = xmsqjk + fx1(j)*fx2(k) * msq_BKGq(j,k)
-        enddo 
-        enddo
-       
-        
-        D_MELA = msq_SIG(0,0)/(msq_SIG(0,0)+msq_BKGg+xmsqjk)      
-
-      
-      return
-      end
+C      subroutine get_MELA_Discr_ggZZ(p,D_MELA)
+C      implicit none
+C      include 'types.f'
+C      include 'mxpart.f'      
+C      real(dp):: p(mxpart,4),D_MELA      
+C      real(dp) :: msq_SIGINT(-5:5,-5:5),msq_SIG(-5:5,-5:5),msq_BKG
+C      logical:: SM
+C      
+C      SM=.false.
+C      
+C        msq_SIG(:,:)=0._dp    
+C        msq_SIGINT(:,:)=0._dp      
+C        msq_BKG=0._dp   
+C        
+C               
+C        call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
+C        call gg_zz(p,msq_BKG,SM)          ! this is the gg-bkg ME (gg->ZZ)
+!         call gg_zz_Hpi(p,msq_SIGINT) ! this includes the interf. term (hence not positive definit)
+C
+C        D_MELA = msq_SIG(0,0)/(msq_SIG(0,0)+msq_BKG)      
+!         D_MELA = msq_SIGINT(0,0)/(msq_SIGINT(0,0)+msq_BKG)
+C
+C      
+C      return
+C      end
+C      
+C      
+C      subroutine get_MELA_Discr_ggZZ_BSM_1(p,D_MELA)
+C      implicit none
+C      include 'types.f'
+C      include 'mxpart.f'      
+C      real(dp):: p(mxpart,4),D_MELA      
+C      real(dp):: msq_SM(-5:5,-5:5),msq_BSM(-5:5,-5:5)
+C      
+C        msq_SM(:,:)=0._dp    
+C        msq_BSM(:,:)=0._dp      
+C        
+C               
+C        call gg_hZZ_tb(p,msq_SM,.true.)  ! this is the BSM signal ME (gg->H->ZZ)
+C        call gg_hZZ_tb(p,msq_BSM,.false.)  ! this is the SM signal ME (gg->H->ZZ)
+C
+C        D_MELA = msq_BSM(0,0)/(msq_BSM(0,0)+msq_SM(0,0))      
+C      
+C      return
+C      end
+C      
+C      subroutine get_MELA_Discr_ggZZ_BSM_2(p,D_MELA)
+C      implicit none
+C      include 'types.f'
+C      include 'mxpart.f'      
+C      real(dp):: p(mxpart,4),D_MELA      
+C      real(dp):: msq_SM(-5:5,-5:5),msq_BSM(-5:5,-5:5)
+C      
+C        msq_SM(:,:)=0._dp    
+C        msq_BSM(:,:)=0._dp      
+C        
+C               
+C        call gg_hZZ_tb(p,msq_SM,.true.)  ! this is the BSM signal ME (gg->H->ZZ)
+C        call gg_hZZ_tb(p,msq_BSM,.false.)  ! this is the SM signal ME (gg->H->ZZ)
+C
+C        D_MELA = (msq_BSM(0,0)-msq_SM(0,0))/(msq_BSM(0,0)+msq_SM(0,0))      
+C      
+C      return
+C      end
+C      
+C
+C      subroutine get_MELA_Discr_PPZZ(p,D_MELA)
+C      implicit none
+C      include 'types.f'
+C      include 'energy.f'      
+C      include 'mxpart.f'  
+C      include 'nf.f'
+C      include 'facscale.f'            
+C      include 'nflav.f'      
+C      real(dp):: p(mxpart,4),D_MELA      
+C      real(dp) :: msq_SIG(-5:5,-5:5),msq_BKGg,msq_BKGq(-5:5,-5:5)
+C      real(dp) :: fx1(-nf:nf),fx2(-nf:nf),xmsqjk,xx(1:2)
+C      real(dp) :: Collider_Energy,Etot,Pztot
+C      integer:: ih1,ih2,j,k
+C      common/density/ih1,ih2
+C      logical:: SM
+C      
+C      SM=.false.
+C      
+C        msq_SIG(:,:)=0._dp    
+C        msq_BKGg=0._dp
+C        msq_BKGq(:,:) = 0d0
+C        
+C               
+C        call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
+C        call gg_zz(p,msq_BKGg,SM)         ! this is the gg-bkg ME (gg->ZZ)
+C        call qqb_zz(p,msq_BKGq)        ! this is the qq-bkg ME (qqb->ZZ)
+C
+C        
+C        Collider_Energy = sqrts
+C        Etot = p(3,4)+p(4,4)+p(5,4)+p(6,4)
+C        Pztot= p(3,3)+p(4,3)+p(5,3)+p(6,3)
+C        xx(1) = (Etot+Pztot)/Collider_Energy
+C        xx(2) = (Etot-Pztot)/Collider_Energy
+C        
+C        call fdist(ih1,xx(1),facscale,fx1)
+C        call fdist(ih2,xx(2),facscale,fx2)
+C
+C        msq_SIG(0,0) = fx1(0)*fx2(0) * msq_SIG(0,0)
+C        msq_BKGg     = fx1(0)*fx2(0) * msq_BKGg
+C
+C        xmsqjk = 0d0
+C        do j=-nflav,nflav
+C        do k=-nflav,nflav                
+C          xmsqjk = xmsqjk + fx1(j)*fx2(k) * msq_BKGq(j,k)
+C        enddo 
+C        enddo
+C       
+C        
+C        D_MELA = msq_SIG(0,0)/(msq_SIG(0,0)+msq_BKGg+xmsqjk)      
+C
+C      
+C      return
+C      end
 c--- End Modification -- MS & AP     
       
       
