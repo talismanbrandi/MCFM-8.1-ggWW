@@ -415,7 +415,7 @@ c      call checkgvec(-1, 1,5,p,qqb_gamgam_g,qqb_gmgmjt_gvec)
         call qqb_hzz(p,msq)
       elseif (kcase==kHZZ_tb) then
 c --- BEGIN MODIFICATION for ggZZ -- AP        
-        call gg_hzz_tb(p,msq,.false.)
+        call gg_hzz_tb(p,msq,.false.,0.,0.) ! The last two numbers do not matter since third argument is set to .false.
 c --- END MODIFICATION for ggZZ -- AP        
       elseif (kcase==kHVV_tb) then
         call gg_hvv_tb(p,msq)
@@ -426,14 +426,14 @@ c --- END MODIFICATION for ggZZ -- AP
         call gg_VV(p,msq(0,0))
       elseif (kcase==kHZZint) then
 c --- BEGIN MODIFICATION for ggZZ -- AP        
-        call gg_zz_int(p,msq,.false.)
+        call gg_zz_int(p,msq,.false.,0.,0.,0.,0.) ! The last four numbers do not matter since fifth last argument is set to .false.
       elseif (kcase==kHZZHpi) then
-        call gg_zz_Hpi(p,msq,.false.)
+        call gg_zz_Hpi(p,msq,.false.,0.,0.,0.,0.) ! The last four numbers do not matter since fifth last argument is set to .false.
       elseif (kcase==kggZZ4l) then
-        call gg_zz_all(p,msq,.false.)
+        call gg_zz_all(p,msq,.false.,0.,0.,0.,0.) ! The last four numbers do not matter since fifth last argument is set to .false.
       elseif (kcase==kggZZbx) then
         msq(:,:)=0._dp
-        call gg_ZZ(p,msq(0,0),.false.)
+        call gg_ZZ(p,msq(0,0),.false.,0.,0.,0.,0.) ! The last four numbers do not matter since fifth last argument is set to .false.
 c --- END MODIFICATION for ggZZ -- AP        
       elseif (kcase==kHZZqgI) then 
          call qg_Hint_ZZ(p,msq)

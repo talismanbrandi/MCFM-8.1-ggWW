@@ -29,11 +29,6 @@ c--- (default: included)
      & Mamp,faczz,facww
       complex(dp):: ggHZZ_bquark(2,2,2,2),ggHZZ_tquark(2,2,2,2),
      & ggHWW_bquark(2,2,2,2),ggHWW_tquark(2,2,2,2)
-c --- BEGIN MODIFICATION for ggZZ -- AP     
-      logical:: SM
-c --- END MODIFICATION for ggZZ -- AP      
-      
-      SM=.true.
 
 c--- set this to true to include generations 1 and 2 of (light) quarks
       includegens1and2=.true.      
@@ -72,14 +67,14 @@ c--- compute all gg->WW and gg->ZZ amplitudes
      & Mlight(:,:,1,1),Mgen3(:,:,1,1))
 c --- BEGIN MODIFICATION for ggZZ -- AP     
       call getggZZamps(p,includegens1and2,includebottom,includetop,
-     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,SM)
+     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,.false.,0.,0.) ! The last four numbers do not matter since third argument is set to .false.
 c --- END MODIFICATION for ggZZ -- AP     
             
 c--- compute all gg->H->WW and gg->H->ZZ amplitudes
       call getggHWWamps(pswap,
      & ggHWW_bquark(:,:,1,1),ggHWW_tquark(:,:,1,1))
 c --- BEGIN MODIFICATION for ggZZ -- AP     
-      call getggHZZamps(p,ggHZZ_bquark,ggHZZ_tquark,SM)
+      call getggHZZamps(p,ggHZZ_bquark,ggHZZ_tquark,.false.,0.,0.) ! The last two numbers do not matter since third argument is set to .false.
 c --- END MODIFICATION for ggZZ -- AP      
 
 c--- pt cut to reproduce Kauer paper

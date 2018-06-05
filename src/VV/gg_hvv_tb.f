@@ -47,7 +47,9 @@ c--- this is the swap to get to the right configuration for the WW call
       
       call getggHWWamps(pswap,
      & ggHWW_bquark(:,:,1,1),ggHWW_tquark(:,:,1,1))
-      call getggHZZamps(p,ggHZZ_bquark,ggHZZ_tquark)
+c --- BEGIN MODIFICATION for ggZZ -- AP       
+      call getggHZZamps(p,ggHZZ_bquark,ggHZZ_tquark,.false.,0.,0.) ! The last two numbers do not matter since third argument is set to .false.
+c --- END MODIFICATION for ggZZ -- AP        
       
 c--- overall factor from getggHZZamps.f that is not common
       faczz=4._dp*esq**2

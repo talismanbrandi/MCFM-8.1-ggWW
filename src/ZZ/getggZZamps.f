@@ -1,6 +1,6 @@
 c --- BEGIN MODIFICATION for ggZZ -- AP
       subroutine getggZZamps(p,dolight,dobottom,dotop,
-     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,SM)
+     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,disc,cVi,cAi)
 c --- END MODIFICATION for ggZZ -- AP
       implicit none
       include 'types.f'
@@ -54,7 +54,8 @@ c--- expected to be unreliable, namely pt(Z)<ptZsafetycut set below
 c     & AmtLL_new(2,2,2,2),AmtLR_new(2,2,2,2)
 
 c --- BEGIN MODIFICATION for ggZZ -- AP
-      logical:: SM
+      logical:: disc
+      real(dp)::cVi,cAi
       real(dp):: ctZV,ctZA
 
       common/ctZV/ctZV
@@ -243,11 +244,15 @@ c--- implementation of t-quark loop in terms of vector and axial couplings
       Amt_vec=two*(AmtLL(h1,h2,h34,h56)+AmtLR(h1,h2,h34,h56))
       Amt_ax =two*(AmtLL(h1,h2,h34,h56)-AmtLR(h1,h2,h34,h56))
 c --- BEGIN MODIFICATION for ggZZ -- AP
-      if (SM) then
+c        Mloop_tquark(h1,h2,h34,h56)=im*(
+c     &  Amt_vec*
+c     &  (Qu*q1+cvec(up)*cl1(h34)*prop34)*(Qu*q2+cvec(up)*cl2(h56)*prop56)
+c     &  +Amt_ax*(cax(up)*cl1(h34)*prop34)*(cax(up)*cl2(h56)*prop56))
+      if (disc) then
         Mloop_tquark(h1,h2,h34,h56)=im*(
      &  Amt_vec*
-     &  (Qu*q1+cvec(up)*cl1(h34)*prop34)*(Qu*q2+cvec(up)*cl2(h56)*prop56)
-     &  +Amt_ax*(cax(up)*cl1(h34)*prop34)*(cax(up)*cl2(h56)*prop56)) 
+     &  (Qu*q1+cVi*cvec(up)*cl1(h34)*prop34)*(Qu*q2+cVi*cvec(up)*cl2(h56)*prop56)
+     &  +Amt_ax*(cAi*cax(up)*cl1(h34)*prop34)*(cAi*cax(up)*cl2(h56)*prop56))  
       else
         Mloop_tquark(h1,h2,h34,h56)=im*(
      &  Amt_vec*

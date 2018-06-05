@@ -1,5 +1,5 @@
 c --- BEGIN MODIFICATION for ggZZ -- AP      
-      subroutine gg_ZZ(p,msqgg,SM)
+      subroutine gg_ZZ(p,msqgg,disc,cti,cgi,cVi,cAi)
 c --- END MODIFICATION for ggZZ -- AP        
       implicit none
       include 'types.f'
@@ -26,7 +26,8 @@ c--- (default: included)
      & Sloop_bquark(2,2,2,2),Sloop_tquark(2,2,2,2),
      & Mamp,Samp
 c --- BEGIN MODIFICATION for ggZZ -- AP     
-      logical:: SM
+      real(dp):: cti,cgi,cVi,cAi
+      logical:: disc
 c --- END MODIFICATION for ggZZ -- AP      
 
 c--- set this to true to include generations 1 and 2 of (light) quarks
@@ -42,7 +43,7 @@ c--- if set, performs check against numerical results at specific PS point
 c--- compute all gg->ZZ amplitudes     
 c --- BEGIN MODIFICATION for ggZZ -- AP 
       call getggZZamps(p,includegens1and2,includebottom,includetop,
-     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,SM)
+     & Mloop_uptype,Mloop_dntype,Mloop_bquark,Mloop_tquark,disc,cVi,cAi)
 c --- END MODIFICATION for ggZZ -- AP     
       
       if (interference) then
@@ -55,7 +56,7 @@ c--- for interference, compute amplitudes after 4<->6 swap
        pswap(6,:)=p(4,:)
 c --- BEGIN MODIFICATION for ggZZ -- AP       
        call getggZZamps(pswap,includegens1and2,includebottom,includetop,
-     &  Sloop_uptype,Sloop_dntype,Sloop_bquark,Sloop_tquark,SM)
+     &  Sloop_uptype,Sloop_dntype,Sloop_bquark,Sloop_tquark,disc,cVi,cAi)
 c --- END MODIFICATION for ggZZ -- AP     
       endif
       

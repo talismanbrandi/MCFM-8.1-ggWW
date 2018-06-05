@@ -5,17 +5,14 @@ c--- Modifications for MELA discriminators -- MS & AP
       include 'mxpart.f'      
       real(dp):: p(mxpart,4),D_MELA      
       real(dp) :: msq_SIGINT(-5:5,-5:5),msq_SIG(-5:5,-5:5),msq_BKG
-      logical:: SM
-      
-      SM=.false.
       
         msq_SIG(:,:)=0._dp    
         msq_SIGINT(:,:)=0._dp      
         msq_BKG=0._dp   
         
                
-        call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
-        call gg_zz(p,msq_BKG,SM)          ! this is the gg-bkg ME (gg->ZZ)
+        call gg_hZZ_tb(p,msq_SIG,.true.,1.,0.)      ! this is the signal ME (gg->H->ZZ)
+        call gg_zz(p,msq_BKG,.true.,1.,0.,1.,1.)    ! this is the gg-bkg ME (gg->ZZ)
 !         call gg_zz_Hpi(p,msq_SIGINT) ! this includes the interf. term (hence not positive definit)
 
         D_MELA = msq_SIG(0,0)/(msq_SIG(0,0)+msq_BKG)      
@@ -37,8 +34,8 @@ c--- Modifications for MELA discriminators -- MS & AP
         msq_BSM(:,:)=0._dp      
         
                
-        call gg_hZZ_tb(p,msq_SM,.true.)  ! this is the BSM signal ME (gg->H->ZZ)
-        call gg_hZZ_tb(p,msq_BSM,.false.)  ! this is the SM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_SM,.true.,1.,0.)    ! this is the BSM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_BSM,.true.,0.9,0.1)  ! this is the SM signal ME (gg->H->ZZ)
 
         D_MELA = msq_BSM(0,0)/(msq_BSM(0,0)+msq_SM(0,0))      
       
@@ -56,8 +53,8 @@ c--- Modifications for MELA discriminators -- MS & AP
         msq_BSM(:,:)=0._dp      
         
                
-        call gg_hZZ_tb(p,msq_SM,.true.)  ! this is the BSM signal ME (gg->H->ZZ)
-        call gg_hZZ_tb(p,msq_BSM,.false.)  ! this is the SM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_SM,.true.,1.,0.)    ! this is the BSM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_BSM,.true.,0.9,0.1)  ! this is the SM signal ME (gg->H->ZZ)
 
         D_MELA = (msq_BSM(0,0)-msq_SM(0,0))/(msq_BSM(0,0)+msq_SM(0,0))      
       
@@ -79,18 +76,15 @@ c--- Modifications for MELA discriminators -- MS & AP
       real(dp) :: Collider_Energy,Etot,Pztot
       integer:: ih1,ih2,j,k
       common/density/ih1,ih2
-      logical:: SM
-      
-      SM=.false.
       
         msq_SIG(:,:)=0._dp    
         msq_BKGg=0._dp
         msq_BKGq(:,:) = 0d0
         
                
-        call gg_hZZ_tb(p,msq_SIG,SM)      ! this is the signal ME (gg->H->ZZ)
-        call gg_zz(p,msq_BKGg,SM)         ! this is the gg-bkg ME (gg->ZZ)
-        call qqb_zz(p,msq_BKGq)        ! this is the qq-bkg ME (qqb->ZZ)
+        call gg_hZZ_tb(p,msq_SIG,.true.,1.,0.)      ! this is the signal ME (gg->H->ZZ)
+        call gg_zz(p,msq_BKGg,.true.,1.,0.,1.,1.)   ! this is the gg-bkg ME (gg->ZZ)
+        call qqb_zz(p,msq_BKGq)                      ! this is the qq-bkg ME (qqb->ZZ)
 
         
         Collider_Energy = sqrts
