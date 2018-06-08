@@ -119,6 +119,12 @@ c      n=n+1
       call bookplot(n,tag,'D_PP_BKG(Spp vs. Bpp)',
      & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
       n=n+1
+
+      call get_MELA_Discr_ppZZ_CMS(p,D_MELA)
+      call bookplot(n,tag,'D_PP_CMS(Spp vs. Bpp)',
+     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
+      n=n+1
+
 c--- End Modification -- MS & AP
 c--- Modifications for adding a few relevant extended histograms for ggZZ -- AP
       call bookplot(n,tag,'60 < m(3456) < 2010',
