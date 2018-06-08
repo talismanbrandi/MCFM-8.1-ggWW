@@ -99,6 +99,27 @@ c---       dx:  bin width
 c---   llplot:  equal to "lin"/"log" for linear/log scale
 
 c--- Plots of m(3456) in specific regions
+c--- Modifications for adding a few relevant extended histograms for ggZZ Discriminator -- MS & AP      
+c      call get_MELA_Discr_ggZZ(p,D_MELA)
+c      call bookplot(n,tag,'D_GG_BKG(Sgg vs. Bgg)',
+c     & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
+c      n=n+1
+      
+c      call get_MELA_Discr_ggZZ_BSM_1(p,D_MELA)
+c      call bookplot(n,tag,'D_BSM_1(S_BSM vs. S_SM v1)',
+c     & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
+c      n=n+1
+      
+c      call get_MELA_Discr_ggZZ_BSM_2(p,D_MELA)
+c      call bookplot(n,tag,'D_BSM_2(S_BSM vs. S_SM v2)',
+c     & D_MELA,wt,wt2,-1._dp,1._dp,0.01_dp,'lin')
+c      n=n+1
+            
+      call get_MELA_Discr_ppZZ(p,D_MELA)
+      call bookplot(n,tag,'D_PP_BKG(Spp vs. Bpp)',
+     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
+      n=n+1
+c--- End Modification -- MS & AP
 c--- Modifications for adding a few relevant extended histograms for ggZZ -- AP
       call bookplot(n,tag,'60 < m(3456) < 2010',
      & m3456,wt,wt2,60._dp,2010._dp,10._dp,'log')
@@ -140,32 +161,6 @@ c--- End Modification -- AP
      & m3456,wt,wt2,50._dp,250._dp,2._dp,'log')
       n=n+1
 
-c--- Modifications for adding a few relevant extended histograms for ggZZ Discriminator -- MS & AP      
-      call get_MELA_Discr_ggZZ(p,D_MELA)
-      call bookplot(n,tag,'D_GG_BKG(Sgg vs. Bgg)',
-     & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
-      n=n+1
-      
-      call get_MELA_Discr_ggZZ_BSM_1(p,D_MELA)
-      call bookplot(n,tag,'D_BSM_1(S_BSM vs. S_SM v1)',
-     & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
-      n=n+1
-      
-      call get_MELA_Discr_ggZZ_BSM_2(p,D_MELA)
-      call bookplot(n,tag,'D_BSM_2(S_BSM vs. S_SM v2)',
-     & D_MELA,wt,wt2,-1._dp,1._dp,0.01_dp,'lin')
-      n=n+1
-            
-      call get_MELA_Discr_ppZZ(p,D_MELA)
-      call bookplot(n,tag,'D_PP_BKG(Spp vs. Bpp)',
-     & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
-      n=n+1
-c--- End Modification -- MS & AP
-        
-        
-        
-        
-      
 c--- usual plots for 3+4
       call autoplot2(p,34,3,4,tag,wt,wt2,n)
 

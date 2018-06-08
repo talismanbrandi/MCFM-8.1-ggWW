@@ -73,7 +73,7 @@
         return
       endif
 c--- Modified for CMS cuts. -- AP
-      makeCMS_hzz=.false. 
+      makeCMS_hzz=.true. 
 c--- End Modification -- AP
       if (makeCMS_hzz) then
         call CMS_hzz(pjet,failed)
@@ -82,8 +82,8 @@ c--- End Modification -- AP
       endif
       
 c--- Modified for CMS cuts. -- AP
-      call get_MELA_Discr_PPZZ(pjet,D_MELA)
-      if(D_MELA .le. 0.4) gencuts=.true.
+c      call get_MELA_Discr_PPZZ(pjet,D_MELA)
+c      if(D_MELA .le. 0.4) gencuts=.true.
 c--- End Modification -- AP
       
       if (cut_mode > 0) then
