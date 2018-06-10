@@ -2,7 +2,8 @@ c--- Modifications for MELA discriminators -- MS & AP
       subroutine get_MELA_Discr_ggZZ(p,D_MELA)
       implicit none
       include 'types.f'
-      include 'mxpart.f'      
+      include 'mxpart.f'
+      include 'constants.f'      
       real(dp):: p(mxpart,4),D_MELA      
       real(dp) :: msq_SIGINT(-5:5,-5:5),msq_SIG(-5:5,-5:5),msq_BKG
       
@@ -11,8 +12,8 @@ c--- Modifications for MELA discriminators -- MS & AP
         msq_BKG=0._dp   
         
                
-        call gg_hZZ_tb(p,msq_SIG,.true.,1.,0.)      ! this is the signal ME (gg->H->ZZ)
-        call gg_zz(p,msq_BKG,.true.,1.,0.,1.,1.)    ! this is the gg-bkg ME (gg->ZZ)
+        call gg_hZZ_tb(p,msq_SIG,.true.,one,zip)      ! this is the signal ME (gg->H->ZZ)
+        call gg_zz(p,msq_BKG,.true.,one,zip,one,one)    ! this is the gg-bkg ME (gg->ZZ)
 !         call gg_zz_Hpi(p,msq_SIGINT) ! this includes the interf. term (hence not positive definit)
 
         D_MELA = msq_SIG(0,0)/(msq_SIG(0,0)+msq_BKG)      
@@ -26,7 +27,8 @@ c--- Modifications for MELA discriminators -- MS & AP
       subroutine get_MELA_Discr_ggZZ_BSM_1(p,D_MELA)
       implicit none
       include 'types.f'
-      include 'mxpart.f'      
+      include 'mxpart.f'
+      include 'constants.f'      
       real(dp):: p(mxpart,4),D_MELA      
       real(dp):: msq_SM(-5:5,-5:5),msq_BSM(-5:5,-5:5)
       
@@ -34,8 +36,8 @@ c--- Modifications for MELA discriminators -- MS & AP
         msq_BSM(:,:)=0._dp      
         
                
-        call gg_hZZ_tb(p,msq_SM,.true.,1.,0.)    ! this is the BSM signal ME (gg->H->ZZ)
-        call gg_hZZ_tb(p,msq_BSM,.true.,0.9,0.1)  ! this is the SM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_SM,.true.,one,zip)    ! this is the BSM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_BSM,.true.,0.9_dp,0.1_dp)  ! this is the SM signal ME (gg->H->ZZ)
 
         D_MELA = msq_BSM(0,0)/(msq_BSM(0,0)+msq_SM(0,0))      
       
@@ -45,7 +47,8 @@ c--- Modifications for MELA discriminators -- MS & AP
       subroutine get_MELA_Discr_ggZZ_BSM_2(p,D_MELA)
       implicit none
       include 'types.f'
-      include 'mxpart.f'      
+      include 'mxpart.f'
+      include 'constants.f'      
       real(dp):: p(mxpart,4),D_MELA      
       real(dp):: msq_SM(-5:5,-5:5),msq_BSM(-5:5,-5:5)
       
@@ -53,8 +56,8 @@ c--- Modifications for MELA discriminators -- MS & AP
         msq_BSM(:,:)=0._dp      
         
                
-        call gg_hZZ_tb(p,msq_SM,.true.,1.,0.)    ! this is the BSM signal ME (gg->H->ZZ)
-        call gg_hZZ_tb(p,msq_BSM,.true.,0.9,0.1)  ! this is the SM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_SM,.true.,one,zip)    ! this is the BSM signal ME (gg->H->ZZ)
+        call gg_hZZ_tb(p,msq_BSM,.true.,0.9_dp,0.1_dp)  ! this is the SM signal ME (gg->H->ZZ)
 
         D_MELA = (msq_BSM(0,0)-msq_SM(0,0))/(msq_BSM(0,0)+msq_SM(0,0))      
       
@@ -69,7 +72,8 @@ c--- Modifications for MELA discriminators -- MS & AP
       include 'mxpart.f'  
       include 'nf.f'
       include 'facscale.f'            
-      include 'nflav.f'      
+      include 'nflav.f'
+      include 'constants.f'      
       real(dp):: p(mxpart,4),D_MELA      
       real(dp) :: msq_SIG(-5:5,-5:5),msq_BKGg,msq_BKGq(-5:5,-5:5)
       real(dp) :: fx1(-nf:nf),fx2(-nf:nf),xmsqjk,xx(1:2)
@@ -79,11 +83,11 @@ c--- Modifications for MELA discriminators -- MS & AP
       
         msq_SIG(:,:)=0._dp    
         msq_BKGg=0._dp
-        msq_BKGq(:,:) = 0d0
+        msq_BKGq(:,:) = 0._dp
         
                
-        call gg_hZZ_tb(p,msq_SIG,.true.,1.,0.)      ! this is the signal ME (gg->H->ZZ)
-        call gg_zz(p,msq_BKGg,.true.,1.,0.,1.,1.)   ! this is the gg-bkg ME (gg->ZZ)
+        call gg_hZZ_tb(p,msq_SIG,.true.,one,zip)      ! this is the signal ME (gg->H->ZZ)
+        call gg_zz(p,msq_BKGg,.true.,one,zip,one,one)   ! this is the gg-bkg ME (gg->ZZ)
         call qqb_zz(p,msq_BKGq)                      ! this is the qq-bkg ME (qqb->ZZ)
 
         
@@ -120,7 +124,8 @@ c--- Modifications for MELA discriminators -- MS & AP
       include 'mxpart.f'  
       include 'nf.f'
       include 'facscale.f'            
-      include 'nflav.f'      
+      include 'nflav.f'
+      include 'constants.f'      
       real(dp) :: p(mxpart,4),D_MELA      
       real(dp) :: msq_gg(-5:5,-5:5)
       real(dp) :: msq_qq(-5:5,-5:5)
@@ -130,9 +135,9 @@ c--- Modifications for MELA discriminators -- MS & AP
       common/density/ih1,ih2
       
         msq_gg(:,:)=0._dp
-        msq_qq(:,:) = 0d0
+        msq_qq(:,:)=0._dp
         
-        call gg_zz_all(p,msq_gg,.true.,sqrt(10.),0.,1.,1.)   ! this is the signal ME (gg->H->ZZ + gg->ZZ)
+        call gg_zz_all(p,msq_gg,.true.,sqrt(10._dp),zip,one,one)   ! this is the signal ME (gg->H->ZZ + gg->ZZ)
         call qqb_zz(p,msq_qq)                                ! this is the qq-bkg ME (qqb->ZZ)
 
         

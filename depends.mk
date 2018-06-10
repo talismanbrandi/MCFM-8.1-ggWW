@@ -5711,7 +5711,9 @@ mdata.o: epinv.f epinv2.f ewinput.f masses.f
 mdata.o: msbarmasses.f nflav.f nores.f
 mdata.o: susycoup.f types.f useet.f
 mdata.o:
-mela.o: types.f mxpart.f
+mela.o: types.f mxpart.f constants.f
+mela.o: energy.f nf.f facscale.f
+mela.o: nflav.f
 mela.o:
 miscclust.o: constants.f cplx.h jetlabel.f
 miscclust.o: kprocess.f mxpart.f nf.f types.f

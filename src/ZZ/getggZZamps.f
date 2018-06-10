@@ -55,6 +55,7 @@ c     & AmtLL_new(2,2,2,2),AmtLR_new(2,2,2,2)
 
 c --- BEGIN MODIFICATION for ggZZ -- AP
       logical:: disc
+      integer :: omp_get_thread_num
       real(dp)::cVi,cAi
       real(dp):: ctZV,ctZA
 
@@ -75,7 +76,8 @@ c--- omit t,b quark loops for pt(Z) < "ptZsafetycut_massive"  (for num. stabilit
       ptZsafetycut_massive=0.1_dp
 
       if (first) then
-        if (rank == 0) then
+        if (omp_get_thread_num() == 0) then
+          write(6,*)' '
           write(6,*)'****************************************************'
           write(6,*)'*                                                  *'
           if (dolight) then
@@ -98,6 +100,7 @@ c--- omit t,b quark loops for pt(Z) < "ptZsafetycut_massive"  (for num. stabilit
           write(6,54) ptZsafetycut_massive, '(b,t loops)'
           write(6,*)'*                                                  *'
           write(6,*)'****************************************************'
+          write(6,*)' '
    54     format(' *  Numer. stability: pt(Z) >',f6.3,' GeV ',a11,' *')
         endif
         first=.false. 
