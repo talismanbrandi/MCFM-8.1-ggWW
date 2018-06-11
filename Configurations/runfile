@@ -1,0 +1,25 @@
+#!/bin/bash
+
+STRING=INI
+STEP=0.1
+MIN=0.0
+MAX=2.0
+MAX=$(echo $MAX + $STEP | bc)
+
+mkdir RUNS_${STRING}
+cp ../Configurations/input_ggZZ_signal.DAT RUNS_${STRING}/.
+cp ../Configurations/input_qqZZ_81.DAT RUNS_${STRING}/.
+
+i=${MIN}
+
+for i in `seq $MIN $STEP $MAX`
+do  
+  cd RUNS_${STRING}
+  i=$(echo $i | awk '{printf "%.1f", $0}')
+  j=$(echo 1 - $i | bc | awk '{printf "%.1f", $0}')
+  sed -e "s/CT/${i}/" -e "s/CG/${j}/" -e "s/CV/0.0/" -e "s/CA/0.0/" -e "s/RUN/13T_${i}/" input_ggZZ_signal.DAT > input_ggZZ_signal_${i}.DAT
+  cd ../
+  ./mcfm_omp RUNS_${STRING} input_ggZZ_signal_${i}.DAT
+done
+
+./mcfm_omp RUNS_${STRING} input_qqZZ_81.DAT
