@@ -104,16 +104,6 @@ c      call get_MELA_Discr_ggZZ(p,D_MELA)
 c      call bookplot(n,tag,'D_GG_BKG(Sgg vs. Bgg)',
 c     & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
 c      n=n+1
-      
-c      call get_MELA_Discr_ggZZ_BSM_1(p,D_MELA)
-c      call bookplot(n,tag,'D_BSM_1(S_BSM vs. S_SM v1)',
-c     & D_MELA,wt,wt2,0._dp,1._dp,0.005_dp,'lin')
-c      n=n+1
-      
-c      call get_MELA_Discr_ggZZ_BSM_2(p,D_MELA)
-c      call bookplot(n,tag,'D_BSM_2(S_BSM vs. S_SM v2)',
-c     & D_MELA,wt,wt2,-1._dp,1._dp,0.01_dp,'lin')
-c      n=n+1
             
       call get_MELA_Discr_ppZZ(p,D_MELA)
       call bookplot(n,tag,'D_PP_BKG(Spp vs. Bpp)',
@@ -124,6 +114,21 @@ c      n=n+1
       call bookplot(n,tag,'D_PP_CMS(Spp vs. Bpp)',
      & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
       n=n+1
+      
+      call get_MELA_Discr_ppZZ_BSM(p,D_MELA,0.5_dp,0.5_dp)
+      call bookplot(n,tag,'D_PP_BSM_0.5_0.5(Spp vs. Bpp)',
+     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
+      n=n+1      
+      
+      call get_MELA_Discr_ppZZ_BSM(p,D_MELA,0.8_dp,0.2_dp)
+      call bookplot(n,tag,'D_PP_BSM_0.8_0.2(Spp vs. Bpp)',
+     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
+      n=n+1      
+      
+      call get_MELA_Discr_ppZZ_BSM(p,D_MELA,1._dp,5._dp)
+      call bookplot(n,tag,'D_PP_BSM_1.0_5.0(Spp vs. Bpp)',
+     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
+      n=n+1      
 
 c--- End Modification -- MS & AP
 c--- Modifications for adding a few relevant extended histograms for ggZZ -- AP
