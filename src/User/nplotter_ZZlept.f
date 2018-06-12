@@ -128,6 +128,11 @@ c      n=n+1
       call get_MELA_Discr_ppZZ_BSM(p,D_MELA,sqrt(10._dp),sqrt(10._dp))
       call bookplot(n,tag,'D_PP_BSM_sqrt10_sqrt10(Spp vs. Bpp)',
      & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
+      n=n+1
+      
+      call get_MELA_Discr_ppZZ_SM(p,D_MELA,1._dp,0._dp)
+      call bookplot(n,tag,'D_PP_BSM_sqrt10_sqrt10(Spp vs. Bpp)',
+     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
       n=n+1      
 
 c--- End Modification -- MS & AP
