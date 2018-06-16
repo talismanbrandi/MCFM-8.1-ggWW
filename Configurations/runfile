@@ -17,7 +17,7 @@ do
   cd RUNS_${STRING}
   i=$(echo $i | awk '{printf "%.1f", $0}')
   j=$(echo 1 - $i | bc | awk '{printf "%.1f", $0}')
-  sed -e "s/CT/${i}/" -e "s/CG/${j}/" -e "s/CV/0.0/" -e "s/CA/0.0/" -e "s/RUN/13T_${i}/" input_ggZZ_signal.DAT > input_ggZZ_signal_${i}.DAT
+  sed -e "s/CT/${i}/" -e "s/CG/${j}/" -e "s/CV/1.0/" -e "s/CA/1.0/" -e "s/RUN/13T_${i}/" input_ggZZ_signal.DAT > input_ggZZ_signal_${i}.DAT
   cd ../
   ./mcfm_omp RUNS_${STRING} input_ggZZ_signal_${i}.DAT
 done

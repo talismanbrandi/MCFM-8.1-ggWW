@@ -46,9 +46,9 @@
 -1        [LHAPDF set]
 
 [Jet definition and event cuts]
-20d0		  [m34min]
+0d0 		  [m34min]
 13000d0		[m34max]
-20d0		  [m56min]
+0d0 		  [m56min]
 13000d0		[m56max]
 250d0 	  [m3456min]
 13000d0		[m3456max]

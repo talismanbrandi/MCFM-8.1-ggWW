@@ -169,6 +169,27 @@ c--- Modifications for MELA discriminators -- MS & AP
         D_MELA = msq_gg(0,0)/(msq_gg(0,0)+xmsqjk)      
 
       return
-      end      
+      end  
+        
+      subroutine get_MELA_Discr_ggZZ_BSM(p,D_MELA,cti,cgi)
+      implicit none
+      include 'types.f'
+      include 'mxpart.f'
+      include 'constants.f'      
+      real(dp):: p(mxpart,4),D_MELA      
+      real(dp) :: msq_BSM(-5:5,-5:5),msq_SM(-5:5,-5:5)
+      real(dp) :: cti,cgi
       
+        msq_BSM(:,:)=0._dp    
+        msq_SM(:,:)=0._dp      
+        
+               
+        call gg_ZZ_all(p,msq_BSM,.true.,cti,cgi,one,one)      ! this is the signal ME (gg->H->ZZ + gg->ZZ) BSM
+        call gg_ZZ_all(p,msq_SM,.true.,one,zip,one,one)       ! this is the signal ME (gg->H->ZZ + gg->ZZ) SM
+
+        D_MELA = msq_SM(0,0)/(msq_SM(0,0)+msq_BSM(0,0))
+
+      
+      return
+      end
 c--- End Modification -- MS & AP
