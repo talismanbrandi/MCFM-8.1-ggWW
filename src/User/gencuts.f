@@ -80,7 +80,7 @@ c--- Modified for CMS cuts. -- AP
           gencuts=.true.
         else
           call get_MELA_Discr_PPZZ_BSM(pjet,D_MELA,one,zip)
-          if (D_MELA .le. 0.4) gencuts=.true.
+          if (D_MELA .le. 0.4_dp) gencuts=.true.
         endif
         return
       endif
