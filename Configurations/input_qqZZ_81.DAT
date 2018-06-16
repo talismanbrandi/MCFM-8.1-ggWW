@@ -41,14 +41,14 @@
 1.275d0		[charm mass]
 
 [Pdf selection]
-'mstw8nl'	[pdlabel]
+'mstw8lo'	[pdlabel]
 'MSTW2008nlo90cl.LHgrid'	[LHAPDF gridfile]
 -1        [LHAPDF set]
 
 [Jet definition and event cuts]
-0d0		    [m34min]
+1d0		    [m34min]
 13000d0		[m34max]
-0d0	   	  [m56min]
+1d0	   	  [m56min]
 13000d0		[m56max]
 250d0		  [m3456min]
 13000d0		[m3456max]
