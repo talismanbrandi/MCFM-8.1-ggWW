@@ -30,11 +30,11 @@ else
 	  FC = mpifort
 	  CXX = mpic++
 	  # for OpenMPI
-	  export OMPI_CXX=/Users/ayanpaul/opt/local/bin/g++
+	  export OMPI_CXX=g++
 	  export OMPI_FC=gfortran
 	else
 	  FC = gfortran
-	  CXX = /Users/ayanpaul/opt/local/bin/g++
+	  CXX = g++
 	endif
 
 	ifeq ($(OSXGFORTRAN),)
