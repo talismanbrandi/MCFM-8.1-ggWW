@@ -113,13 +113,18 @@ c---- reject event if any s(i,j) is too small
       endif
 c--- see whether this point will pass cuts - if it will not, do not
 c--- bother calculating the matrix elements for it, instead bail out
+c--- Modification for generating correct facscale before making cuts. -- AP
+      if (dynamicscale) call scaleset(initscale,initfacscale,p)
+c--- END Modification for generating correct facscale before making cuts. -- AP
       if (includedipole(0,p) .eqv. .false.) then
         goto 999
       endif
 
 c      call writeout(p)
 c      stop
-      if (dynamicscale) call scaleset(initscale,initfacscale,p)
+c--- Modification for generating correct facscale before making cuts. -- AP
+c      if (dynamicscale) call scaleset(initscale,initfacscale,p)
+c--- END Modification for generating correct facscale before making cuts. -- AP
       
       xx(1)=-2._dp*p(1,4)/sqrts
       xx(2)=-2._dp*p(2,4)/sqrts

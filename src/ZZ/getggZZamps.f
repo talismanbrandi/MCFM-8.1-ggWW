@@ -76,7 +76,8 @@ c--- omit t,b quark loops for pt(Z) < "ptZsafetycut_massive"  (for num. stabilit
       ptZsafetycut_massive=0.1_dp
 
       if (first) then
-        if (omp_get_thread_num() == 0) then
+!$omp master        
+        if (rank == 0) then
           write(6,*)' '
           write(6,*)'****************************************************'
           write(6,*)'*                                                  *'
@@ -103,6 +104,7 @@ c--- omit t,b quark loops for pt(Z) < "ptZsafetycut_massive"  (for num. stabilit
           write(6,*)' '
    54     format(' *  Numer. stability: pt(Z) >',f6.3,' GeV ',a11,' *')
         endif
+!$omp end master        
         first=.false. 
 c---   54   format(' *  Numer. stability: pt(Z) >',f6.3,' GeV ',a11,' *')
       endif
