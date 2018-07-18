@@ -98,7 +98,6 @@ c---     xmax:  highest value to bin
 c---       dx:  bin width
 c---   llplot:  equal to "lin"/"log" for linear/log scale
 
-c--- Plots of m(3456) in specific regions
 c--- Modifications for adding a few relevant extended histograms for ggZZ Discriminator -- MS & AP      
 c      call get_MELA_Discr_ggZZ(p,D_MELA)
 c      call bookplot(n,tag,'D_GG_BKG(Sgg vs. Bgg)',
@@ -135,14 +134,14 @@ C      n=n+1
      & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
       n=n+1    
       
-      call get_MELA_Discr_ggZZ_BSM(p,D_MELA,-0.3_dp,0.3_dp)
-      call bookplot(n,tag,'D_PP_BSM_m0.3_0.3(Spp vs. Bpp)',
-     & D_MELA,wt,wt2,0._dp,1._dp,0.25_dp,'lin')
-      n=n+1
-      
-      call bookplot(n,tag,'D_PP_BSM_m0.3_0.3_S(Spp vs. Bpp)',
-     & D_MELA,wt,wt2,0._dp,1._dp,0.1_dp,'lin')
-      n=n+1      
+C      call get_MELA_Discr_ggZZ_BSM(p,D_MELA,0.3_dp,0.3_dp)
+C      call bookplot(n,tag,'D_PP_BSM_m0.3_0.3(Spp vs. Bpp)',
+C     & D_MELA,wt,wt2,0._dp,1._dp,0.25_dp,'lin')
+C      n=n+1
+C      
+C      call bookplot(n,tag,'D_PP_BSM_m0.3_0.3_S(Spp vs. Bpp)',
+C     & D_MELA,wt,wt2,0._dp,1._dp,0.1_dp,'lin')
+C      n=n+1      
       
 C      call get_MELA_Discr_ggZZ_BSM(p,D_MELA,0.7_dp,0.3_dp)
 C      call bookplot(n,tag,'D_PP_BSM_0.7_0.3(Spp vs. Bpp)',
@@ -166,6 +165,27 @@ C      n=n+1
 
 c--- End Modification -- MS & AP
 c--- Modifications for adding a few relevant extended histograms for ggZZ -- AP
+
+      call bookplot(n,tag,'250 < m(3456) < 400',
+     & m3456,wt,wt2,250._dp,400._dp,150._dp,'lin')
+      n=n+1
+      
+      call bookplot(n,tag,'400 < m(3456) < 600',
+     & m3456,wt,wt2,400._dp,600._dp,200._dp,'lin')
+      n=n+1
+      
+      call bookplot(n,tag,'600 < m(3456) < 800',
+     & m3456,wt,wt2,600._dp,800._dp,200._dp,'lin')
+      n=n+1
+      
+      call bookplot(n,tag,'800 < m(3456) < 1100',
+     & m3456,wt,wt2,800._dp,1100._dp,300._dp,'lin')
+      n=n+1
+      
+      call bookplot(n,tag,'1100 < m(3456) < 1500',
+     & m3456,wt,wt2,1100._dp,1500._dp,400._dp,'lin')
+      n=n+1
+
       call bookplot(n,tag,'60 < m(3456) < 2010',
      & m3456,wt,wt2,60._dp,2010._dp,10._dp,'log')
       n=n+1
