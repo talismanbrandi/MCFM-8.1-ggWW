@@ -134,6 +134,11 @@ C      n=n+1
      & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
       n=n+1    
       
+      call get_MELA_Discr_ggZZ_BSM(p,D_MELA,1.5_dp,-0.5_dp)
+      call bookplot(n,tag,'D_BSM_o_SM(Spp vs. Bpp)',
+     & D_MELA,wt,wt2,-0.5_dp,0.5_dp,0.1_dp,'lin')
+      n=n+1
+      
 C      call get_MELA_Discr_ggZZ_BSM(p,D_MELA,0.3_dp,0.3_dp)
 C      call bookplot(n,tag,'D_PP_BSM_m0.3_0.3(Spp vs. Bpp)',
 C     & D_MELA,wt,wt2,0._dp,1._dp,0.25_dp,'lin')

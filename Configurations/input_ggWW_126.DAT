@@ -131,8 +131,9 @@
 1d0       [bff]
 0         [mtex]
 
-[ct -> Effective top-Higgs coupling, cg -> Effective gluon-Higgs coupling, cV, cA -> Modifications to tZ couplings]
+[ct -> Effective top-Higgs coupling, cg -> Effective gluon-Higgs coupling, cV, cA -> Modifications to tZ couplings, Dcut -> cut on the background discriminator]
 1.        [ct]
 0.        [cg]
 1.        [cV]
 1.        [cA]
+0.25d0    [Dcut]

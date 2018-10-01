@@ -187,7 +187,7 @@ c--- Modifications for MELA discriminators -- MS & AP
         call gg_ZZ_all(p,msq_BSM,.true.,cti,cgi,one,one)      ! this is the signal ME (gg->H->ZZ + gg->ZZ) BSM
         call gg_ZZ_all(p,msq_SM,.true.,one,zip,one,one)       ! this is the signal ME (gg->H->ZZ + gg->ZZ) SM
 
-        D_MELA = msq_SM(0,0)/(msq_SM(0,0)+msq_BSM(0,0))
+        D_MELA = msq_BSM(0,0)/(msq_SM(0,0))
 
       
       return

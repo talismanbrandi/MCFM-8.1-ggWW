@@ -27,6 +27,9 @@
       logical gencuts_VHbb,gencuts_VHWW,gencuts_ATLAS_gaga2,lhcb_cuts
       real(dp):: pjet(mxpart,4)
       real(dp):: D_MELA
+      real(dp):: Dcut
+      
+      common/Dcut/Dcut
 !$omp threadprivate(makeVBScuts,makeATLAS_sscuts)
 !$omp threadprivate(makeCMS_hzz,makeCMS_hzz_vbf)
       
@@ -78,9 +81,9 @@ c--- Modified for CMS cuts. -- AP
         call CMS_hzz(pjet,failed)
         if (failed) then
           gencuts=.true.
-        else
+        else if (Dcut > 0.0_dp) then
           call get_MELA_Discr_PPZZ_BSM(pjet,D_MELA,one,zip)
-          if (D_MELA .le. 0.25_dp) gencuts=.true.
+          if (D_MELA .le. Dcut) gencuts=.true.
         endif
         return
       endif

@@ -89,11 +89,13 @@ c--- APPLgrid - end
 c --- BEGIN MODIFICATION for ggWW -- AP
       real(dp):: ct,cg
       real(dp):: ctZV,ctZA
+      real(dp):: Dcut
 
       common/ct/ct
       common/cg/cg
       common/ctZV/ctZV
       common/ctZA/ctZA
+      common/Dcut/Dcut
 c --- END MODIFICATION for ggWW -- AP
       
       common/writerefs/writerefs
@@ -617,6 +619,9 @@ c--- cV-cA for Modifications to top couplings
         if (verbose) call writeinput(6,' * ',' ','ctZV')
         read(20,*) ctZA
         if (verbose) call writeinput(6,' * ',' ','ctZA')
+c--- Cut on the background discriminator      
+        read(20,*) Dcut
+        if (verbose) call writeinput(6,' * ',' ','Dcut')
       endif
 c --- END MODIFICATION for ggWW -- AP
 
