@@ -170,6 +170,58 @@ c--- Modifications for MELA discriminators -- MS & AP
 
       return
       end  
+      
+      subroutine get_MELA_Discr_PPZZ_BSM_SM(p,D_MELA,cti,cgi)
+      implicit none
+      include 'types.f'
+      include 'energy.f'      
+      include 'mxpart.f'  
+      include 'nf.f'
+      include 'facscale.f'            
+      include 'nflav.f'
+      include 'constants.f'      
+      real(dp) :: p(mxpart,4),D_MELA      
+      real(dp) :: msq_gg(-5:5,-5:5)
+      real(dp) :: msq_gg_SM(-5:5,-5:5)
+      real(dp) :: msq_qq(-5:5,-5:5)
+      real(dp) :: fx1(-nf:nf),fx2(-nf:nf),xmsqjk,xx(1:2)
+      real(dp) :: Collider_Energy,Etot,Pztot
+      real(dp) :: cti,cgi
+      integer:: ih1,ih2,j,k
+      common/density/ih1,ih2
+      
+        msq_gg(:,:)=0._dp
+        msq_qq(:,:)=0._dp
+        
+        call gg_zz_all(p,msq_gg,.true.,cti,cgi,one,one)      ! this is the signal ME (gg->H->ZZ + gg->ZZ)
+        call gg_zz_all(p,msq_gg_SM,.true.,one,zip,one,one)      ! this is the signal ME (gg->H->ZZ + gg->ZZ)
+        call qqb_zz(p,msq_qq)                                ! this is the qq-bkg ME (qqb->ZZ)
+
+        
+        Collider_Energy = sqrts
+        Etot = p(3,4)+p(4,4)+p(5,4)+p(6,4)
+        Pztot= p(3,3)+p(4,3)+p(5,3)+p(6,3)
+        xx(1) = (Etot+Pztot)/Collider_Energy
+        xx(2) = (Etot-Pztot)/Collider_Energy
+        
+        call fdist(ih1,xx(1),facscale,fx1)
+        call fdist(ih2,xx(2),facscale,fx2)
+
+        msq_gg(0,0)  = fx1(0)*fx2(0) * msq_gg(0,0)
+        msq_gg_SM(0,0)  = fx1(0)*fx2(0) * msq_gg_SM(0,0)
+
+        xmsqjk = 0d0
+        do j=-nflav,nflav
+        do k=-nflav,nflav                
+          xmsqjk = xmsqjk + fx1(j)*fx2(k) * msq_qq(j,k)
+        enddo 
+        enddo
+        
+        D_MELA = (msq_gg(0,0)+xmsqjk)/(msq_gg_SM(0,0)+xmsqjk)      
+
+      return
+      end       
+      
         
       subroutine get_MELA_Discr_ggZZ_BSM(p,D_MELA,cti,cgi)
       implicit none
