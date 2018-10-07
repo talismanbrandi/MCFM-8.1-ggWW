@@ -35,11 +35,11 @@ notification            = Complete
 request_cpus            = 12
 request_memory          = 8 GB
 requirements            = OpSysAndVer == "CentOS7"
-+RequestRuntime         = 21600
++RequestRuntime         = 54000
 
 # Set up the run with exe and arguments. "config" is a directory.
 # This is an OMP run.
-environment             = OMP_NUM_THREADS=12
+environment             = OMP_NUM_THREADS=12;OMP_STACKSIZE=16000
 executable              = mcfm_omp
 arguments               = ../WORK/$(RUNDIR) $(INPUTFILE)
 
