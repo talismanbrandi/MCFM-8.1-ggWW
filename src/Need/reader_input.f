@@ -88,11 +88,13 @@ c--- APPLgrid - end
 !$omp threadprivate(/seedBlock/)
 c --- BEGIN MODIFICATION for ggWW -- AP
       real(dp):: ct,cg
+      real(dp):: cb
       real(dp):: ctZV,ctZA
       real(dp):: Dcut
 
       common/ct/ct
       common/cg/cg
+      common/cb/cb
       common/ctZV/ctZV
       common/ctZA/ctZA
       common/Dcut/Dcut
@@ -614,6 +616,9 @@ c--- ct-cg for Effective Higgs Operators
         if (verbose) call writeinput(6,' * ',' ','ct')
         read(20,*) cg
         if (verbose) call writeinput(6,' * ',' ','cg')
+c--- cb for Effective Higgs Operators
+        read(20,*) cb
+        if (verbose) call writeinput(6,' * ',' ','cb')        
 c--- cV-cA for Modifications to top couplings
         read(20,*) ctZV
         if (verbose) call writeinput(6,' * ',' ','ctZV')

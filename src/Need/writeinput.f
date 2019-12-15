@@ -63,11 +63,13 @@ c--- APPLgrid - end
       real(dp):: rtsmin,Rcut
 c --- BEGIN MODIFICATION for ggWW -- AP
       real(dp):: ct,cg
+      real(dp):: cb
       real(dp):: ctZV,ctZA
       real(dp):: Dcut
 
       common/ct/ct
       common/cg/cg
+      common/cb/cb
       common/ctZV/ctZV
       common/ctZA/ctZA
       common/Dcut/Dcut
@@ -541,6 +543,9 @@ c --- BEGIN MODIFICATION for ggWW -- AP
         endif
         if ((tag .eq. 'cg') .or. (writeall)) then
         write(unitno,fmt=f99) cg,'cg'
+        endif
+        if ((tag .eq. 'cb') .or. (writeall)) then
+        write(unitno,fmt=f99) cb,'cb'
         endif
         if ((tag .eq. 'ctZV') .or. (writeall)) then
         write(unitno,fmt=f99) ctZV,'ctZV'

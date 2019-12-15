@@ -35,9 +35,11 @@ c --- BEGIN MODIFICATION for ggZZ -- AP
       logical:: disc
       real(dp):: cti,cgi
       real(dp):: ct,cg
+      real(dp):: cb
 
       common/ct/ct
       common/cg/cg
+      common/cb/cb
 c --- END MODIFICATION for ggZZ -- AP
 
 !==== for width studies rescale by appropriate factor 
@@ -83,8 +85,17 @@ c --- END MODIFICATION for ggZZ -- AP
       ggHmt(2,2)=ggHmt(2,2)*zb(1,2)/za(1,2)
 
 c------ bottom quark in the loop
-      ggHmb(2,2)=mb2*(two-s(1,2)*C0mb*(1._dp-4._dp*mb2/s(1,2)))
+c      ggHmb(2,2)=mb2*(two-s(1,2)*C0mb*(1._dp-4._dp*mb2/s(1,2)))
+c     & /(two*wmass*sinthw)
+c --- BEGIN MODIFICATION for ggZZ -- AP     
+      if (disc) then
+        ggHmb(2,2)=mb2*(two-s(1,2)*C0mb*(1._dp-4._dp*mb2/s(1,2)))
      & /(two*wmass*sinthw)
+      else 
+        ggHmb(2,2)=cb*mb2*(two-s(1,2)*C0mb*(1._dp-4._dp*mb2/s(1,2)))
+   & /(two*wmass*sinthw)
+      endif
+c --- END MODIFICATION for ggZZ -- AP      
       ggHmb(1,1)=ggHmb(2,2)*za(1,2)/zb(1,2)
       ggHmb(2,2)=ggHmb(2,2)*zb(1,2)/za(1,2)
 
