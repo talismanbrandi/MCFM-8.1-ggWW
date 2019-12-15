@@ -622,6 +622,15 @@ c--- cV-cA for Modifications to top couplings
 c--- Cut on the background discriminator      
         read(20,*) Dcut
         if (verbose) call writeinput(6,' * ',' ','Dcut')
+      else if (nproc .eq. 81) then 
+        if (verbose) write(6,*)
+        read(20,99) line
+c--- write-out comment line
+        read(20,99) line
+        if (verbose) write(6,*) '* ',line
+c--- Cut on the background discriminator      
+        read(20,*) Dcut
+        if (verbose) call writeinput(6,' * ',' ','Dcut')        
       endif
 c --- END MODIFICATION for ggWW -- AP
 

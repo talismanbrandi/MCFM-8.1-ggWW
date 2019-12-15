@@ -551,6 +551,10 @@ c --- BEGIN MODIFICATION for ggWW -- AP
         if ((tag .eq. 'Dcut') .or. (writeall)) then
         write(unitno,fmt=f99) Dcut,'Dcut'
         endif
+      else if (nproc .eq. 81) then
+        if ((tag .eq. 'Dcut') .or. (writeall)) then
+        write(unitno,fmt=f99) Dcut,'Dcut'
+        endif        
       endif
 c --- END MODIFICATION for ggWW -- AP
       
