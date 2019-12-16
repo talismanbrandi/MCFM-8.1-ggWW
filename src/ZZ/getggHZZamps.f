@@ -93,7 +93,7 @@ c --- BEGIN MODIFICATION for ggZZ -- AP
      & /(two*wmass*sinthw)
       else 
         ggHmb(2,2)=cb*mb2*(two-s(1,2)*C0mb*(1._dp-4._dp*mb2/s(1,2)))
-   & /(two*wmass*sinthw)
+     & /(two*wmass*sinthw)
       endif
 c --- END MODIFICATION for ggZZ -- AP      
       ggHmb(1,1)=ggHmb(2,2)*za(1,2)/zb(1,2)
