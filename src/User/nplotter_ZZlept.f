@@ -129,20 +129,20 @@ C      call bookplot(n,tag,'D_PP_BSM_sqrt10_sqrt10(Spp vs. Bpp)',
 C     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
 C      n=n+1
       
-      call get_MELA_Discr_PPZZ_BSM(p,D_MELA,one,zip)
-      call bookplot(n,tag,'D_PP_SM(Spp vs. Bpp)',
-     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
-      n=n+1    
+C      call get_MELA_Discr_PPZZ_BSM(p,D_MELA,one,zip)
+C      call bookplot(n,tag,'D_PP_SM(Spp vs. Bpp)',
+C     & D_MELA,wt,wt2,0._dp,1._dp,0.05_dp,'lin')
+C      n=n+1    
       
-      call get_MELA_Discr_ggZZ_BSM(p,D_MELA,0.7_dp,0.3_dp)
-      call bookplot(n,tag,'D_BSM(Spp vs. Bpp)',
-     & D_MELA,wt,wt2,0._dp,3._dp,0.1_dp,'lin')
-      n=n+1
+C      call get_MELA_Discr_ggZZ_BSM(p,D_MELA,0.7_dp,0.3_dp)
+C      call bookplot(n,tag,'D_BSM(Spp vs. Bpp)',
+C     & D_MELA,wt,wt2,0._dp,3._dp,0.1_dp,'lin')
+C      n=n+1
       
-      call get_MELA_Discr_PPZZ_BSM_SM(p,D_MELA,0.7_dp,0.3_dp)
-      call bookplot(n,tag,'D_BSM_o_SM(Spp vs. Bpp)',
-     & D_MELA,wt,wt2,0.5_dp,3._dp,0.1_dp,'lin')
-      n=n+1
+C      call get_MELA_Discr_PPZZ_BSM_SM(p,D_MELA,0.7_dp,0.3_dp)
+C      call bookplot(n,tag,'D_BSM_o_SM(Spp vs. Bpp)',
+C     & D_MELA,wt,wt2,0.5_dp,3._dp,0.1_dp,'lin')
+C      n=n+1
       
 C      call get_MELA_Discr_ggZZ_BSM(p,D_MELA,0.3_dp,0.3_dp)
 C      call bookplot(n,tag,'D_PP_BSM_m0.3_0.3(Spp vs. Bpp)',
